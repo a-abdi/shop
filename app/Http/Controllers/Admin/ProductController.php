@@ -9,9 +9,14 @@ use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 use App\Models\Admin;
 use App\Models\Product;
+use App\Services\ProductService;
 
 class ProductController extends Controller
 {
+    public function __construct(
+        private ProductService $productService,
+    ){}
+
     /**
      * Display a listing of the resource.
      *
@@ -33,26 +38,7 @@ class ProductController extends Controller
      */
     public function store(Request $request)
     {
-        $path = $request->image->store('images', 'public');
-        $url = Storage::url($path);
-        
-        $valiad_data = [
-            "name" => $request->name,
-            "product_code" => Str::random(8),
-            'user_id'=> Auth::id(),
-            'category_id'=> 1,
-            "price" => $request->price,
-            "discount" => $request->discount,
-            "description" => $request->description,
-            "quantity" => $request->quantity,
-            "image_src" => $url,
-        ];
-
-        $product = new Product;
-        $product = $product->create($valiad_data);
-        return response()->json([
-            'product_id' => $product->id
-        ], 201);
+        $this->productService->validate_store($request->all());
     }
 
     /**

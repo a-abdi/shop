@@ -7,6 +7,9 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Models\Admin;
 use Illuminate\Support\Facades\Hash;
+use Exception;
+use InvalidArgumentException;
+use App\Exceptions\InvalidProductException;
 
 class AuthController extends Controller
 {
@@ -17,9 +20,9 @@ class AuthController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return object
      */
-    public function regitser(Request $request)
+    public function register(Request $request)
     {
-
+       
     }
 
     /**
@@ -33,6 +36,7 @@ class AuthController extends Controller
     public function login(Request $request)
     {
         $admin = Admin::where('email', $request->email)->first();
+
         if(!$admin) {
             return response()->json([
                 'error' => 'Unauthorized'
