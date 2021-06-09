@@ -14,7 +14,7 @@ class ProductService
      * Validate store product.
      *
      * @param array
-     * @return string|array
+     * @return true|array
      */
     public function validate_store($data)
     {
@@ -30,5 +30,7 @@ class ProductService
         if($validator->fails()) {
             throw new InvalidArgumentException($validator->errors()->first());
         }
+
+        return true;
     }
 }

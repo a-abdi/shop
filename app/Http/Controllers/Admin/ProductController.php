@@ -10,11 +10,13 @@ use Illuminate\Support\Str;
 use App\Models\Admin;
 use App\Models\Product;
 use App\Services\ProductService;
+use App\Services\PublicService;
 
 class ProductController extends Controller
 {
     public function __construct(
         private ProductService $productService,
+        private PublicService $publicService,
     ){}
 
     /**
