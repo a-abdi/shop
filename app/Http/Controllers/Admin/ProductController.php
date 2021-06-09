@@ -4,17 +4,15 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Storage;
-use Illuminate\Support\Str;
-use App\Models\Admin;
 use App\Models\Product;
 use App\Services\ProductService;
 use App\Services\PublicService;
+use App\Contracts\Repositories\ProductRepositoryInterface;
 
 class ProductController extends Controller
 {
     public function __construct(
+        private ProductRepositoryInterface $productRepository,
         private Product $product,
         private ProductService $productService,
         private PublicService $publicService,
@@ -49,7 +47,12 @@ class ProductController extends Controller
 
         // create product data for save in database
         $product_data = $this->product->data($request->except('image'), $image_url);
+        
+        // save product in database
+        $new_product = $this->productRepository->create($product_data);
 
+        // return new product 
+        return $this->successResponse($new_product, 201);
     }
 
     /**
