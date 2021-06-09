@@ -31,20 +31,16 @@ class Product extends Model
     /**
      * Fill product data.
      *
-     * @param object
+     * @param array
+     * @param string
      * @return array
      */
-    public function product_data($product) {
-        return [
-            "name" => $product->name,
+    public function data($product, $image_url) {
+        return array_merge($product, [
             "product_code" => Str::random(8),
             'user_id'=> Auth::id(),
             'category_id'=> 1,
-            "price" => $product->price,
-            "discount" => $product->discount,
-            "description" => $product->description,
-            "quantity" => $product->quantity,
-            "image_src" => $url,
-        ];
+            "image_src" => $image_url,
+        ]);
     }
 }

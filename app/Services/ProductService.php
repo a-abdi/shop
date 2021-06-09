@@ -5,11 +5,9 @@ namespace App\Services;
 use Exception;
 use Illuminate\Support\Facades\Validator;
 use App\Exceptions\InvalidArgumentException;
-use App\Traits\ApiResponser;
 
 class ProductService
 {
-    use ApiResponser;
     /**
      * Validate store product.
      *

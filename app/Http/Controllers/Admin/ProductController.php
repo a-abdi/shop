@@ -15,6 +15,7 @@ use App\Services\PublicService;
 class ProductController extends Controller
 {
     public function __construct(
+        private Product $product,
         private ProductService $productService,
         private PublicService $publicService,
     ){}
@@ -40,7 +41,15 @@ class ProductController extends Controller
      */
     public function store(Request $request)
     {
+        // check validate data
         $this->productService->validate_store($request->all());
+
+        // store image in disk
+        $image_url = $this->publicService->store_file($request->image);
+
+        // create product data for save in database
+        $product_data = $this->product->data($request->except('image'), $image_url);
+
     }
 
     /**

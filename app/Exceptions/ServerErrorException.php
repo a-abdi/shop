@@ -5,11 +5,11 @@ namespace App\Exceptions;
 use Exception;
 use App\Traits\ApiResponser;
 
-class InternalServerError extends Exception
+class ServerErrorException extends Exception
 {
     use ApiResponser;
 
-    public function __construct(protected $message = "internal server error"){}
+    public function __construct(protected $message = "server error"){}
 
     /**
      * Report the exception.
