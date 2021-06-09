@@ -63,7 +63,7 @@ class ProductController extends Controller
      */
     public function show($id)
     {
-        $product = Product::find($id);
+        $product = $this->productRepository->find($id);
         return response()->json([
             'product' => $product
         ], 200);
