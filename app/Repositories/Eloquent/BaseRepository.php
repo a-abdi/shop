@@ -45,10 +45,9 @@ class BaseRepository
         return $this;
     }
 
-    public function update(array $data, $id)
+    public function update(array $data, $object)
     {
-        $record = $this->model->find($id);
-        return $record->update($data);
+        return $object->update($data);
     }
 
     public function with($relations)

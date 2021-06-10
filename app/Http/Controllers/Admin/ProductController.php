@@ -6,8 +6,8 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Product;
 use App\Services\ProductService;
-use App\Services\PublicService;
 use App\Contracts\Repositories\ProductRepositoryInterface;
+use App\Exceptions\NotFoundException;
 
 class ProductController extends Controller
 {
@@ -15,7 +15,6 @@ class ProductController extends Controller
         private ProductRepositoryInterface $productRepository,
         private Product $product,
         private ProductService $productService,
-        private PublicService $publicService,
     ){}
 
     /**
@@ -25,10 +24,9 @@ class ProductController extends Controller
      */
     public function index()
     {
-        $products = Product::all();
-        return response()->json([
-            'products' => $products
-        ], 200);
+        $products = $this->productRepository->all();
+
+        return $this->successResponse($products);
     }
 
     /**
@@ -43,13 +41,16 @@ class ProductController extends Controller
         $this->productService->validate_store($request->all());
 
         // store image in disk
-        $image_url = $this->publicService->store_file($request->image);
+        $image_url = $this->productService->store_file($request->image);
 
         // create product data for save in database
         $product_data = $this->product->data($request->except('image'), $image_url);
         
         // save product in database
         $new_product = $this->productRepository->create($product_data);
+
+        // Create http address for image.
+        $new_product['image_src'] = asset($new_product['image_src']);
 
         // return new product 
         return $this->successResponse($new_product, 201);
@@ -64,9 +65,14 @@ class ProductController extends Controller
     public function show($id)
     {
         $product = $this->productRepository->find($id);
-        return response()->json([
-            'product' => $product
-        ], 200);
+
+        // Check exist product.
+        $this->productService->check_exist($product);
+
+        // Create http address for image.
+        $product['image_src'] = asset($product['image_src']);
+
+        return $this->successResponse($product);
     }
 
     /**
@@ -78,7 +84,16 @@ class ProductController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $this->productService->validate_update($request->all());
+
+        $product = $this->productRepository->find($id);
+
+        // Check exist product.
+        $this->productService->check_exist($product);
+
+        $this->productRepository->update($request->except('image'), $product);
+
+        return $this->successResponse();
     }
 
     /**
@@ -89,6 +104,13 @@ class ProductController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $product = $this->productRepository->find($id);
+
+        // Check exist product.
+        $this->productService->check_exist($product);
+
+        $this->product->destroy($product->id);
+
+        return $this->successResponse();
     }
 }
