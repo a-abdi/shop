@@ -12,7 +12,7 @@ trait ApiResponser{
 	 * @param int $code
      * @return array
      */
-    protected function successResponse($data = null, $code = 200, $message = "success")
+    protected function successResponse($data = null, $message = "success", $code = 200)
 	{
 		return response()->json([
 			'status' => 'success', 

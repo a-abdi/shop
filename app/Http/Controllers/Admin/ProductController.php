@@ -53,7 +53,9 @@ class ProductController extends Controller
         $new_product['image_src'] = asset($new_product['image_src']);
 
         // return new product 
-        return $this->successResponse($new_product, 201);
+        return $this->successResponse($new_product, __('messages.stored', [
+            'name' => 'product'
+            ]) ,201);
     }
 
     /**
@@ -93,7 +95,9 @@ class ProductController extends Controller
 
         $this->productRepository->update($request->except('image'), $product);
 
-        return $this->successResponse();
+        return $this->successResponse(null, __('messages.updated', [
+            'name' => 'product'
+        ]));
     }
 
     /**
@@ -111,6 +115,8 @@ class ProductController extends Controller
 
         $this->product->destroy($product->id);
 
-        return $this->successResponse();
+        return $this->successResponse(null, __('messages.deleted', [
+            'name' => 'product'
+        ]));
     }
 }
