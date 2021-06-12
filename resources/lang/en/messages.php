@@ -8,7 +8,13 @@ return [
     |--------------------------------------------------------------------------
     */
 
-    'stored' => 'The :name was successfully stored.',
-    'updated' => 'The :name was successfully updated.',
-    'deleted' => 'The :name was successfully deleted.',
+    // success message
+    'stored'  => ':name stored successfully.',
+    'updated' => ':name updated successfully.',
+    'deleted' => ':name deleted successfully.',
+    'created' => ':name created successfully.',
+
+
+    // error message
+    'exist' => ":name already exists!"
 ];

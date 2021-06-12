@@ -7,9 +7,6 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Models\Admin;
 use Illuminate\Support\Facades\Hash;
-use Exception;
-use InvalidArgumentException;
-use App\Exceptions\InvalidProductException;
 
 class AuthController extends Controller
 {

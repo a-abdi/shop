@@ -7,7 +7,6 @@ use Illuminate\Http\Request;
 use App\Models\Product;
 use App\Services\ProductService;
 use App\Contracts\Repositories\ProductRepositoryInterface;
-use App\Exceptions\NotFoundException;
 
 class ProductController extends Controller
 {
@@ -95,7 +94,7 @@ class ProductController extends Controller
 
         $this->productRepository->update($request->except('image'), $product);
 
-        return $this->successResponse(null, __('messages.updated', [
+        return $this->successResponse(message: __('messages.updated', [
             'name' => 'product'
         ]));
     }
@@ -115,7 +114,7 @@ class ProductController extends Controller
 
         $this->product->destroy($product->id);
 
-        return $this->successResponse(null, __('messages.deleted', [
+        return $this->successResponse(message: __('messages.deleted', [
             'name' => 'product'
         ]));
     }
