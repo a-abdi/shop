@@ -12,7 +12,7 @@ class RepositoryPattern extends Command
      *
      * @var string
      */
-    protected $signature = 'make:RepositoryPattern {name}';
+    protected $signature = 'make:repository_pattern {name}';
 
     /**
      * The console command description.

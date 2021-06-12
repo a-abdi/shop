@@ -67,7 +67,7 @@ class BaseRepository
 
     public function where($type, $value)
     {
-        return $this->model->where($type, $value)->get();
+        return $this->model->where($type, $value)->first();
     }
 
     public function get_bye_offset_limit($offset, $limit) 

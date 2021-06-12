@@ -14,7 +14,7 @@ class ProductService extends MainService
      * Validate store product.
      *
      * @param array
-     * @return true|array
+     * @return App\Exceptions\InvalidArgumentException|true
      */
     public function validate_store($data)
     {
@@ -34,6 +34,12 @@ class ProductService extends MainService
         return true;
     }
 
+    /**
+     * Validate update product.
+     *
+     * @param array
+     * @return App\Exceptions\NotFoundException|true
+     */
     public function validate_update($data)
     {
         // base64_decode ( string $string , bool $strict = false ) : string|false
