@@ -3,11 +3,30 @@
 namespace App\Services;
 
 use Exception;
+use App\Services\MainService;
 use Illuminate\Support\Facades\Hash;
 use App\Exceptions\UnauthorizedException;
 
-class AuthService
+class AuthService extends MainService
 {
+     /**
+     * Validate login data.
+     *
+     * @param array
+     * @return App\Exceptions\InvalidArgumentException|true
+     */
+    public function validate_login($data)
+    {
+        $rule = [
+            'email'    => 'required|email|',
+            'password' => 'required',
+        ];
+
+        $this->validate($data, $rule);
+
+        return true;
+    }
+
     /**
      * check user authorized.
      * 

@@ -13,7 +13,7 @@ class AuthController extends Controller
 {
     public function __construct(
         private AdminRepositoryInterface $productRepository,
-        private Authservice $authservice,
+        private Authservice $authService,
     ){}
 
     /**
@@ -38,11 +38,14 @@ class AuthController extends Controller
      */
     public function login(Request $request)
     {
+        // validate login data
+        $this->authService->validate_login($request->only(['email', 'password']));
+
         // get admin with email
         $user = $this->productRepository->where('email', $request->email);
 
         // check admin authorized
-        $this->authservice->check_user_authorized($user, $request->password);
+        $this->authService->check_user_authorized($user, $request->password);
 
         // create access token
         $token = $user->createToken('admin')->accessToken;

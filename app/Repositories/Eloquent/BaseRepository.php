@@ -24,7 +24,7 @@ class BaseRepository
         return $this->model->create($data);
     }
     
-    public function delete($id)
+    public function destroy($id)
     {
         return $this->model->destroy($id);
     }

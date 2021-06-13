@@ -112,7 +112,7 @@ class ProductController extends Controller
         // Check exist product.
         $this->productService->check_exist($product);
 
-        $this->product->destroy($product->id);
+        $this->productRepository->destroy($product->id);
 
         return $this->successResponse(message: __('messages.deleted', [
             'name' => 'product'

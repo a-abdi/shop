@@ -4,6 +4,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Admin\AuthController;
 use App\Http\Controllers\Admin\ProductController;
+use App\Http\Controllers\Admin\CategoryController;
 
 /*
 |--------------------------------------------------------------------------
@@ -23,5 +24,6 @@ Route::prefix('admin')->group(function () {
 
     Route::middleware(['auth:admin-api'])->group(function () {
         Route::apiResource('products', ProductController::class);
+        Route::apiResource('categories', CategoryController::class);
     });
 });

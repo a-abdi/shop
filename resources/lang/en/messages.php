@@ -16,6 +16,7 @@ return [
 
 
     // error message
-    'exist' => ":name already exists!",
+    'exist'        => ":name already exists!",
     'unauthorized' => 'Incorrect user or password',
+    'not_found'    => 'not found'
 ];
