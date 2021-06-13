@@ -39,13 +39,13 @@ class AuthController extends Controller
     public function login(Request $request)
     {
         // validate login data
-        $this->authService->validate_login($request->only(['email', 'password']));
+        $this->authService->validateLogin($request->only(['email', 'password']));
 
         // get admin with email
         $user = $this->productRepository->where('email', $request->email);
 
         // check admin authorized
-        $this->authService->check_user_authorized($user, $request->password);
+        $this->authService->checkUserAuthorized($user, $request->password);
 
         // create access token
         $token = $user->createToken('admin')->accessToken;

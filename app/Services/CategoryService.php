@@ -12,7 +12,7 @@ class CategoryService extends MainService
      * @param array
      * @return App\Exceptions\InvalidArgumentException|true
      */
-    public function validate_store($data)
+    public function validateStore($data)
     {
         $rule = [
             'name'        => 'required|string|unique:categories|min:3|max:255',
@@ -30,7 +30,7 @@ class CategoryService extends MainService
      * @param array
      * @return App\Exceptions\InvalidArgumentException|true
      */
-    public function validate_update($data, $id)
+    public function validateUpdate($data, $id)
     {
         $rule = [
             'name'        => 'nullable|string|unique:categories,name,'. $id .'|min:3|max:255',

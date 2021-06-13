@@ -39,21 +39,21 @@ class ProductController extends Controller
     public function store(Request $request)
     {
         // check validate data
-        $this->productService->validate_store($request->except('category'));
+        $this->productService->validateStore($request->except('category'));
 
         // find category bye name
         $category = $this->categoryRepository->where('name', $request->category);
 
         // check exist category
-        $this->productService->check_exist($category, __('messages.not_found', [
+        $this->productService->checkExist($category, __('messages.not_found', [
             'name' => 'category'
         ]));
 
         // store image in disk
-        $image_url = $this->productService->store_file($request->image);
+        $image_url = $this->productService->storeFile($request->image);
 
         // create product data for save in database
-        $product_data = $this->productService->create_product_data($request->except(['image', 'category']), $image_url, $category->id);
+        $product_data = $this->productService->createProductData($request->except(['image', 'category']), $image_url, $category->id);
         
         // save product in database
         $new_product = $this->productRepository->create($product_data);
@@ -78,7 +78,7 @@ class ProductController extends Controller
         $product = $this->productRepository->find($id);
 
         // Check exist product.
-        $this->productService->check_exist($product, __('messages.not_found', [
+        $this->productService->checkExist($product, __('messages.not_found', [
             'name' => 'product'
         ]));
 
@@ -97,12 +97,12 @@ class ProductController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $this->productService->validate_update($request->all());
+        $this->productService->validateUpdate($request->all());
 
         $product = $this->productRepository->find($id);
 
         // Check exist product.
-        $this->productService->check_exist($product, __('messages.not_found', [
+        $this->productService->checkExist($product, __('messages.not_found', [
             'name' => 'product'
         ]));
 
@@ -124,7 +124,7 @@ class ProductController extends Controller
         $product = $this->productRepository->find($id);
 
         // Check exist product.
-        $this->productService->check_exist($product, __('messages.not_found', [
+        $this->productService->checkExist($product, __('messages.not_found', [
             'name' => 'product'
         ]));
 

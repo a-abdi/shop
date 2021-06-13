@@ -33,7 +33,7 @@ class CategoryController extends Controller
      */
     public function store(Request $request)
     {
-        $this->categoryService->validate_store($request->all());
+        $this->categoryService->validateStore($request->all());
 
         $newCategory = $this->categoryRepository->create($request->all());
 
@@ -51,7 +51,7 @@ class CategoryController extends Controller
         $category = $this->categoryRepository->find($id);
 
         // Check exist category.
-        $this->categoryService->check_exist($category, __('messages.not_found', [
+        $this->categoryService->checkExist($category, __('messages.not_found', [
             'name' => 'category'
         ]));
 
@@ -70,11 +70,11 @@ class CategoryController extends Controller
         $category = $this->categoryRepository->find($id);
         
         // Check exist category.
-        $this->categoryService->check_exist($category, __('messages.not_found', [
+        $this->categoryService->checkExist($category, __('messages.not_found', [
             'name' => 'category'
         ]));
         
-        $this->categoryService->validate_update($request->all(), $id);
+        $this->categoryService->validateUpdate($request->all(), $id);
 
         $this->categoryRepository->update($request->all(), $category);
 
@@ -94,7 +94,7 @@ class CategoryController extends Controller
         $category = $this->categoryRepository->find($id);
 
         // Check exist category.
-        $this->categoryService->check_exist($category, __('messages.not_found', [
+        $this->categoryService->checkExist($category, __('messages.not_found', [
             'name' => 'category'
         ]));
 

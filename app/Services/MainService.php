@@ -17,7 +17,7 @@ class MainService
      * @param string
      * @return string
      */
-    public function store_file($file)
+    public function storeFile($file)
     {
         return Storage::url($file->store('images', 'public'));
     }
@@ -28,7 +28,7 @@ class MainService
      * @param object|null
      * @return App\Exceptions\NotFoundException|true
      */
-    public function check_exist($object = null, $message = 'not found')
+    public function checkExist($object = null, $message = 'not found')
     {
         if(!$object) {
             throw new NotFoundException($message); 

@@ -15,7 +15,7 @@ class AuthService extends MainService
      * @param array
      * @return App\Exceptions\InvalidArgumentException|true
      */
-    public function validate_login($data)
+    public function validateLogin($data)
     {
         $rule = [
             'email'    => 'required|email|',
@@ -34,7 +34,7 @@ class AuthService extends MainService
      * @param string $password
      * @return App\Exceptions\UnauthorizedException|true
      */
-    public function check_user_authorized($user, $password) 
+    public function checkUserAuthorized($user, $password) 
     {
         if (!$user || !Hash::check($password, $user->password)) {
             throw new UnauthorizedException(__('messages.unauthorized'));

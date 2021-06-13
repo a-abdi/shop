@@ -16,7 +16,7 @@ class ProductService extends MainService
      * @param array
      * @return App\Exceptions\InvalidArgumentException|true
      */
-    public function validate_store($data)
+    public function validateStore($data)
     {
         $rule = [
             'name'        => 'required|string|min:3|max:64',
@@ -38,7 +38,7 @@ class ProductService extends MainService
      * @param array
      * @return App\Exceptions\InvalidArgumentException|true
      */
-    public function validate_update($data)
+    public function validateUpdate($data)
     {
         $rule = [
             'name'        => 'nullable|string|min:3|max:64',
@@ -62,7 +62,7 @@ class ProductService extends MainService
      * @param int    $category_id
      * @return array
      */
-    public function create_product_data($data, $image_url, $category_id)
+    public function createProductData($data, $image_url, $category_id)
     {
 
         $product_data = array_merge($data, [
