@@ -51,7 +51,9 @@ class CategoryController extends Controller
         $category = $this->categoryRepository->find($id);
 
         // Check exist category.
-        $this->categoryService->check_exist($category);
+        $this->categoryService->check_exist($category, __('messages.not_found', [
+            'name' => 'category'
+        ]));
 
         return $this->successResponse($category);
     }
@@ -68,7 +70,9 @@ class CategoryController extends Controller
         $category = $this->categoryRepository->find($id);
         
         // Check exist category.
-        $this->categoryService->check_exist($category);
+        $this->categoryService->check_exist($category, __('messages.not_found', [
+            'name' => 'category'
+        ]));
         
         $this->categoryService->validate_update($request->all(), $id);
 
@@ -90,7 +94,9 @@ class CategoryController extends Controller
         $category = $this->categoryRepository->find($id);
 
         // Check exist category.
-        $this->categoryService->check_exist($category);
+        $this->categoryService->check_exist($category, __('messages.not_found', [
+            'name' => 'category'
+        ]));
 
         $this->categoryRepository->destroy($category->id);
 

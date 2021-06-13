@@ -9,14 +9,14 @@ return [
     */
 
     // success message
-    'stored'  => ':name stored successfully.',
-    'updated' => ':name updated successfully.',
-    'deleted' => ':name deleted successfully.',
-    'created' => ':name created successfully.',
+    'stored'  => ':Name stored successfully.',
+    'updated' => ':Name updated successfully.',
+    'deleted' => ':Name deleted successfully.',
+    'created' => ':Name created successfully.',
 
 
     // error message
-    'exist'        => ":name already exists!",
+    'exist'        => ":Name already exists!",
     'unauthorized' => 'Incorrect user or password',
-    'not_found'    => 'not found'
+    'not_found'    => ':Name not found'
 ];

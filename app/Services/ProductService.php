@@ -3,6 +3,10 @@
 namespace App\Services;
 
 use App\Services\MainService;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Str;
+use Illuminate\Support\Facades\Storage;
+
 
 class ProductService extends MainService
 {
@@ -36,8 +40,6 @@ class ProductService extends MainService
      */
     public function validate_update($data)
     {
-        // base64_decode ( string $string , bool $strict = false ) : string|false
-
         $rule = [
             'name'        => 'nullable|string|min:3|max:64',
             'price'       => 'nullable|numeric|min:1|max:9999999999',
@@ -50,5 +52,26 @@ class ProductService extends MainService
         $this->validate($data, $rule);
 
         return true;
+    }
+
+    /**
+     * Create data for save.
+     *
+     * @param array  $data
+     * @param string $image_url
+     * @param int    $category_id
+     * @return array
+     */
+    public function create_product_data($data, $image_url, $category_id)
+    {
+
+        $product_data = array_merge($data, [
+                "product_code" => Str::random(8),
+                'user_id'      => Auth::id(),
+                'category_id'  => $category_id,
+                "image_src"    => $image_url,
+            ]);
+
+        return $product_data;
     }
 }
