@@ -178,6 +178,7 @@ return [
         App\Providers\Repositories\ProductServiceProvider::class,
         App\Providers\Repositories\AdminServiceProvider::class,
         App\Providers\Repositories\CategoryServiceProvider::class,
+        App\Providers\Repositories\UserServiceProvider::class,
     ],
 
     /*

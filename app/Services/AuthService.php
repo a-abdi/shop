@@ -9,6 +9,26 @@ use App\Exceptions\UnauthorizedException;
 
 class AuthService extends MainService
 {
+    /**
+     * Validate register data.
+     *
+     * @param array
+     * @return App\Exceptions\InvalidArgumentException|true
+     */
+    public function validateRegister($data)
+    {
+        $rule = [
+            'name'                  => 'required|string|min:3|max:100',
+            'email'                 => 'required|email|max:255|unique:users',
+            'password'              => 'required|confirmed|min:8|max:255',
+            'password_confirmation' => 'required'
+        ];
+
+        $this->validate($data, $rule);
+
+        return true;
+    }
+
      /**
      * Validate login data.
      *

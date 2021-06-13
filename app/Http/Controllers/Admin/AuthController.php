@@ -12,7 +12,7 @@ use App\Contracts\Repositories\AdminRepositoryInterface;
 class AuthController extends Controller
 {
     public function __construct(
-        private AdminRepositoryInterface $productRepository,
+        private AdminRepositoryInterface $adminRepository,
         private Authservice $authService,
     ){}
 
@@ -42,7 +42,7 @@ class AuthController extends Controller
         $this->authService->validateLogin($request->only(['email', 'password']));
 
         // get admin with email
-        $user = $this->productRepository->where('email', $request->email);
+        $user = $this->adminRepository->where('email', $request->email);
 
         // check admin authorized
         $this->authService->checkUserAuthorized($user, $request->password);

@@ -37,7 +37,9 @@ class CategoryController extends Controller
 
         $newCategory = $this->categoryRepository->create($request->all());
 
-        return $this->successResponse($newCategory);
+        return $this->successResponse($newCategory, __('messages.stored', [
+            'name' => 'category'
+            ]) ,201);
     }
 
     /**
