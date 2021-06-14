@@ -6,6 +6,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ProductController;
 
 use App\Http\Controllers\User\AuthController as UserAuthController;
+use App\Http\Controllers\User\CartController as UserCartController;
 
 use App\Http\Controllers\Admin\AuthController as AdminAuthController;
 use App\Http\Controllers\Admin\ProductController as AdminProductController;
@@ -29,6 +30,10 @@ Route::get('/products/{product}', [ ProductController::class, 'show']);
 Route::prefix('user')->group(function () {
     Route::post('/register', [ UserAuthController::class, 'register' ])->name('user.register');
     Route::post('/login', [ UserAuthController::class, 'login' ])->name('user.login');
+
+    Route::middleware(['auth:api'])->group(function () {
+        Route::apiResource('carts', UserCartController::class);
+    });
 });
 
 /*
