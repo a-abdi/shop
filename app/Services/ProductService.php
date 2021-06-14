@@ -62,16 +62,16 @@ class ProductService extends MainService
      * @param int    $category_id
      * @return array
      */
-    public function createProductData($data, $image_url, $category_id)
+    public function createProductData($data, $imageUrl, $categoryId)
     {
 
-        $product_data = array_merge($data, [
+        $productData = array_merge($data, [
                 "product_code" => Str::random(8),
                 'user_id'      => Auth::id(),
-                'category_id'  => $category_id,
-                "image_src"    => $image_url,
+                'category_id'  => $categoryId,
+                "image_src"    => $imageUrl,
             ]);
 
-        return $product_data;
+        return $productData;
     }
 }

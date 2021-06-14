@@ -3,11 +3,22 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
+use App\Http\Controllers\ProductController;
+
 use App\Http\Controllers\User\AuthController as UserAuthController;
 
 use App\Http\Controllers\Admin\AuthController as AdminAuthController;
-use App\Http\Controllers\Admin\ProductController;
+use App\Http\Controllers\Admin\ProductController as AdminProductController;
 use App\Http\Controllers\Admin\CategoryController;
+
+/*
+|--------------------------------------------------------------------------
+| PUBLIC API Routes
+|--------------------------------------------------------------------------
+*/
+
+Route::get('/products', [ ProductController::class, 'index']);
+Route::get('/products/{product}', [ ProductController::class, 'show']);
 
 /*
 |--------------------------------------------------------------------------
@@ -31,7 +42,7 @@ Route::prefix('admin')->group(function () {
     Route::post('/login', [ AdminAuthController::class, 'login' ])->name('admin.login');
 
     Route::middleware(['auth:admin-api'])->group(function () {
-        Route::apiResource('products', ProductController::class);
+        Route::apiResource('products', AdminProductController::class);
         Route::apiResource('categories', CategoryController::class);
     });
 });
