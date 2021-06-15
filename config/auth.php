@@ -44,7 +44,7 @@ return [
         'api' => [
             'driver' => 'passport',
             'provider' => 'users',
-            'hash' => false,
+            // 'hash' => false,
         ],
 
         'admin' => [
@@ -52,10 +52,10 @@ return [
             'provider' => 'admins',
         ],
 
-        'admin-api' => [
+        'api-admins' => [
             'driver' => 'passport',
             'provider' => 'admins',
-            'hash' => false,
+            // 'hash' => false,
         ],
     ],
 

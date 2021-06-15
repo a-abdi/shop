@@ -3,6 +3,7 @@
 namespace App\Console\Commands;
 
 use Illuminate\Console\Command;
+use Illuminate\Support\Facades\Hash;
 use App\Services\AuthService;
 use App\Contracts\Repositories\AdminRepositoryInterface;
 
@@ -45,7 +46,7 @@ class CreateAdmin extends Command
 
         $type = $this->choice('Select the admin type.', ['New', 'Fake'], $defaultIndex);
 
-        $this->line('*********************************************************************');
+        $this->line('********************************************************************************');
         
         match ($type) {
             "New"   => $this->adminNew(),
@@ -70,16 +71,20 @@ class CreateAdmin extends Command
         if($admin) {
             $this->error('  Email already exists!');
         } else {
-            $adminNew['password'] = $this->secret('Password');
+            $password = $this->secret('Password');
 
             $adminNew['confirm_password'] = $this->secret('Confirm password');
 
-            if($adminNew['password'] != $adminNew['confirm_password']) {
+            if($password != $adminNew['confirm_password']) {
                 $this->error('  Password not match!'); 
             } else {
+                $adminNew['password'] = Hash::make($password);
+
                 $this->adminRepository->create($adminNew);
 
                 $this->info('  Admin created successfuly');
+                
+                $adminNew['password'] = $password;
 
                 $this->messageCreate($adminNew);
             }
@@ -107,9 +112,15 @@ class CreateAdmin extends Command
 
             $this->messageCreate($adminFake);
         } else {
+            $password = $adminFake['password'];
+
+            $adminFake['password'] = Hash::make($adminFake['password']);
+
             $this->adminRepository->create($adminFake);
 
             $this->info('  Admin created successfuly');
+
+            $adminFake['password'] = $password;
 
             $this->messageCreate($adminFake);
         }
@@ -123,12 +134,12 @@ class CreateAdmin extends Command
      */
     protected function messageCreate ($admin)
     {   
-        $this->line('*********************************************************************');
+        $this->line('********************************************************************************');
         $this->info('  Name: '. $admin['name']);
-        $this->line('*********************************************************************');
+        $this->line('********************************************************************************');
         $this->info('  Email: '. $admin['email']);
-        $this->line('*********************************************************************');
+        $this->line('********************************************************************************');
         $this->info('  Password: '. $admin['password']);
-        $this->line('*********************************************************************');
+        $this->line('********************************************************************************');
     }
 }

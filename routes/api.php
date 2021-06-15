@@ -18,7 +18,7 @@ use App\Http\Controllers\Admin\CategoryController;
 |--------------------------------------------------------------------------
 */
 
-Route::get('/products', [ ProductController::class, 'index']);
+Route::get('/products', [ ProductController::class, 'index'])->middleware(['auth:api-admins']);
 Route::get('/products/{product}', [ ProductController::class, 'show']);
 Route::post('/register', [ UserAuthController::class, 'register' ])->name('user.register');
 Route::post('/login', [ UserAuthController::class, 'login' ])->name('user.login');

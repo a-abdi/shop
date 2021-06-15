@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Contracts\Repositories\ProductRepositoryInterface;
 use App\Services\ProductService;
 use Illuminate\Http\Request;
+use Auth;
 
 class ProductController extends Controller
 {
@@ -21,6 +22,7 @@ class ProductController extends Controller
      */
     public function index(Request $request) 
     {
+        dd(Auth::id(),Auth::user());
         $products = $this->productRepository->all();
 
         return $this->successResponse($products);
