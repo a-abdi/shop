@@ -4,7 +4,6 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use App\Models\Admin;
 use App\Services\AuthService;
 use App\Contracts\Repositories\AdminRepositoryInterface;
 
@@ -18,7 +17,7 @@ class AuthController extends Controller
 
     /**
      * Get the information admin created new admin.
-     * This function is only accessible to the admin user.
+     * This function is only accessible to the admin.
      *
      * @param  \Illuminate\Http\Request  $request
      * @return object
@@ -30,7 +29,7 @@ class AuthController extends Controller
 
     /**
      * Get the credential.
-     * This function is only accessible to the admin user.
+     * This function is only accessible to the admim.
      * Return access token.
      *
      * @param  \Illuminate\Http\Request  $request
@@ -42,13 +41,13 @@ class AuthController extends Controller
         $this->authService->validateLogin($request->only(['email', 'password']));
 
         // get admin with email
-        $user = $this->adminRepository->where('email', $request->email);
+        $admin = $this->adminRepository->where('email', $request->email);
 
         // check admin authorized
-        $this->authService->checkUserAuthorized($user, $request->password);
+        $this->authService->checkUserAuthorized($admin, $request->password);
 
         // create access token
-        $token = $user->createToken('admin')->accessToken;
+        $token = $admin->createToken('admin')->accessToken;
         
         return $this->successResponse($token);
     }

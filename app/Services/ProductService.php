@@ -5,8 +5,6 @@ namespace App\Services;
 use App\Services\MainService;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Str;
-use Illuminate\Support\Facades\Storage;
-
 
 class ProductService extends MainService
 {
@@ -58,18 +56,18 @@ class ProductService extends MainService
      * Create data for save.
      *
      * @param array  $data
-     * @param string $image_url
-     * @param int    $category_id
+     * @param string $imageSrc
+     * @param int    $categoryId
      * @return array
      */
-    public function createProductData($data, $imageUrl, $categoryId)
+    public function createProductData($data, $imageSrc, $categoryId)
     {
 
         $productData = array_merge($data, [
                 "product_code" => Str::random(8),
-                'user_id'      => Auth::id(),
+                'admin_id'      => Auth::id(),
                 'category_id'  => $categoryId,
-                "image_src"    => $imageUrl,
+                "image_src"    => $imageSrc,
             ]);
 
         return $productData;

@@ -4,7 +4,6 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use App\Models\Product;
 use App\Services\ProductService;
 use App\Contracts\Repositories\ProductRepositoryInterface;
 use App\Contracts\Repositories\CategoryRepositoryInterface;
@@ -50,19 +49,19 @@ class ProductController extends Controller
         ]));
 
         // store image in disk
-        $image_url = $this->productService->storeFile($request->image);
+        $imageSrc = $this->productService->storeFile($request->image);
 
         // create product data for save in database
-        $product_data = $this->productService->createProductData($request->except(['image', 'category']), $image_url, $category->id);
+        $productData = $this->productService->createProductData($request->except(['image', 'category']), $image_url, $category->id);
         
         // save product in database
-        $new_product = $this->productRepository->create($product_data);
+        $newProduct = $this->productRepository->create($productData);
 
         // Create http address for image.
-        $new_product['image_src'] = asset($new_product['image_src']);
+        $newProduct['image_src'] = asset($newProduct['image_src']);
 
         // return new product 
-        return $this->successResponse($new_product, __('messages.stored', [
+        return $this->successResponse($newProduct, __('messages.stored', [
             'name' => 'product'
             ]) ,201);
     }

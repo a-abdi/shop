@@ -17,7 +17,7 @@ class Product extends Model
     protected $fillable = [
         'name',
         'price',
-        'user_id',
+        'admin_id',
         'discount',
         'image_src',
         'product_code',
@@ -33,5 +33,6 @@ class Product extends Model
      */
     protected $hidden = [
         'product_code',
+        'admin_id',
     ];
 }

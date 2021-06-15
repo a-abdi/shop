@@ -20,6 +20,8 @@ use App\Http\Controllers\Admin\CategoryController;
 
 Route::get('/products', [ ProductController::class, 'index']);
 Route::get('/products/{product}', [ ProductController::class, 'show']);
+Route::post('/register', [ UserAuthController::class, 'register' ])->name('user.register');
+Route::post('/login', [ UserAuthController::class, 'login' ])->name('user.login');
 
 /*
 |--------------------------------------------------------------------------
@@ -27,13 +29,8 @@ Route::get('/products/{product}', [ ProductController::class, 'show']);
 |--------------------------------------------------------------------------
 */
 
-Route::prefix('user')->group(function () {
-    Route::post('/register', [ UserAuthController::class, 'register' ])->name('user.register');
-    Route::post('/login', [ UserAuthController::class, 'login' ])->name('user.login');
-
-    Route::middleware(['auth:api'])->group(function () {
-        Route::apiResource('carts', UserCartController::class)->except(['show']);
-    });
+Route::middleware(['auth:api'])->group(function () {
+    Route::apiResource('carts', UserCartController::class)->except(['show']);
 });
 
 /*

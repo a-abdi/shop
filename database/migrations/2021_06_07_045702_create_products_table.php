@@ -17,7 +17,7 @@ class CreateProductsTable extends Migration
             $table->id();
             $table->string('name', 64);
             $table->string('product_code', 8)->unique();
-            $table->unsignedBigInteger('user_id');
+            $table->unsignedBigInteger('admin_id');
             $table->unsignedBigInteger('category_id');
             $table->unsignedInteger('price');
             $table->unsignedInteger('discount')->nullable();
