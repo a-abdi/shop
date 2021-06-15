@@ -10,9 +10,7 @@ class ProductController extends Controller
 {
     public function __construct(
         private ProductRepositoryInterface $productRepository,
-        // private Product $product,
         private ProductService $productService,
-        // private CategoryRepositoryInterface $categoryRepository,
     ){}
     
     /**

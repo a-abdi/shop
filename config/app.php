@@ -179,6 +179,7 @@ return [
         App\Providers\Repositories\AdminServiceProvider::class,
         App\Providers\Repositories\CategoryServiceProvider::class,
         App\Providers\Repositories\UserServiceProvider::class,
+        App\Providers\Repositories\CartServiceProvider::class,
     ],
 
     /*

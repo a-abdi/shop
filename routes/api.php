@@ -32,7 +32,7 @@ Route::prefix('user')->group(function () {
     Route::post('/login', [ UserAuthController::class, 'login' ])->name('user.login');
 
     Route::middleware(['auth:api'])->group(function () {
-        Route::apiResource('carts', UserCartController::class);
+        Route::apiResource('carts', UserCartController::class)->except(['show']);
     });
 });
 

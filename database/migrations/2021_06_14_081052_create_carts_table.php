@@ -15,6 +15,9 @@ class CreateCartsTable extends Migration
     {
         Schema::create('carts', function (Blueprint $table) {
             $table->id();
+            $table->unsignedBigInteger('user_id');
+            $table->unsignedBigInteger('product_id');
+            $table->enum('status', [ 'active', 'inactive' ]);
             $table->timestamps();
         });
     }

@@ -4,9 +4,20 @@ namespace App\Http\Controllers\User;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use App\Contracts\Repositories\ProductRepositoryInterface;
+use App\Contracts\Repositories\CartRepositoryInterface;
+use App\Services\ProductService;
+use App\Services\CartService;
 
 class CartController extends Controller
 {
+    public function __construct(
+        private ProductRepositoryInterface $productRepository,
+        private CartRepositoryInterface $cartRepository,
+        private ProductService $productService,
+        private CartService $cartService,
+    ){}
+
     /**
      * Display a listing of the resource.
      *
@@ -14,7 +25,7 @@ class CartController extends Controller
      */
     public function index()
     {
-        //
+        dd($this->cartRepository->products());
     }
 
     /**
@@ -25,18 +36,20 @@ class CartController extends Controller
      */
     public function store(Request $request)
     {
-        //
-    }
+        $product = $this->productRepository->find($request->productId);
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        //
+        // Check exist product.
+        $this->productService->checkExist($product, __('messages.not_found', [
+            'name' => 'product'
+        ]));
+        
+        $cartData = $this->cartService->cartData($request->productId);
+
+        $newCart = $this->cartRepository->create($cartData);
+        
+        return $this->successResponse($newCart, __('messages.created', [
+            'name' => 'cart'
+        ]), 201);
     }
 
     /**
