@@ -4,6 +4,9 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use App\Models\Cart;
+use App\Models\Category;
+use App\Models\Admin;
 
 class Product extends Model
 {
@@ -35,4 +38,28 @@ class Product extends Model
         'product_code',
         'admin_id',
     ];
+
+    /**
+     * Get the carts for the product.
+     */
+    public function carts()
+    {
+        return $this->hasMany(Cart::class);
+    }
+
+     /**
+     * Get the category that owns the product.
+     */
+    public function category()
+    {
+        return $this->belongsTo(Category::class);
+    }
+
+    /**
+     * Get the admin that owns the product.
+     */
+    public function admin()
+    {
+        return $this->belongsTo(Admin::class);
+    }
 }

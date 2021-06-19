@@ -12,9 +12,4 @@ class CartRepository extends BaseRepository implements CartRepositoryInterface
     {
         parent::__construct($cart);
     }
-
-    public function products() {
-        $user = new User;
-        return $user->products();
-    }
 }

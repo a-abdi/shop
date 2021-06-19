@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Passport\HasApiTokens;
+use App\Models\Product;
 
 class Admin extends Authenticatable
 {
@@ -31,4 +32,13 @@ class Admin extends Authenticatable
     protected $hidden = [
         'password',
     ];
+
+    /**
+     * Get the products for the admin.
+     */
+    public function products()
+    {
+        return $this->hasMany(Product::class);
+    }
+
 }
