@@ -9,6 +9,7 @@ use App\Contracts\Repositories\CartRepositoryInterface;
 use App\Contracts\Repositories\UserRepositoryInterface;
 use App\Services\ProductService;
 use App\Services\CartService;
+use Illuminate\Support\Facades\Auth;
 
 class CartController extends Controller
 {
@@ -27,7 +28,11 @@ class CartController extends Controller
      */
     public function index()
     {
+        $userId = Auth::id();
 
+        $carts = $this->cartRepository->getCart($userId);
+
+        return $this->successResponse($carts);
     }
 
     /**
@@ -74,6 +79,17 @@ class CartController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $cart = $this->cartRepository->find($id);
+
+        // Check exist cart.
+        $this->cartService->checkExist($cart, __('messages.not_found', [
+            'name' => 'cart'
+        ]));
+
+        $this->cartRepository->destroy($cart->id);
+
+        return $this->successResponse(message: __('messages.deleted', [
+            'name' => 'cart'
+        ]));
     }
 }

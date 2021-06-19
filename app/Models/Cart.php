@@ -28,7 +28,7 @@ class Cart extends Model
      * @var array
      */
     protected $hidden = [
-        // 
+        'status'
     ];
 
     /**

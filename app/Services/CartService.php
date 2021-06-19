@@ -18,7 +18,7 @@ class CartService extends MainService
         return [
             'user_id'    => Auth::id(),
             'product_id' => $productId,
-            'status'     => 'active',
+            'status'     => 'cart',
         ];
     }
     
