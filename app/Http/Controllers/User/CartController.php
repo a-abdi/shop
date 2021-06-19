@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Contracts\Repositories\ProductRepositoryInterface;
 use App\Contracts\Repositories\CartRepositoryInterface;
+use App\Contracts\Repositories\UserRepositoryInterface;
 use App\Services\ProductService;
 use App\Services\CartService;
 
@@ -13,6 +14,7 @@ class CartController extends Controller
 {
     public function __construct(
         private ProductRepositoryInterface $productRepository,
+        private UserRepositoryInterface $userRepository,
         private CartRepositoryInterface $cartRepository,
         private ProductService $productService,
         private CartService $cartService,
@@ -25,7 +27,7 @@ class CartController extends Controller
      */
     public function index()
     {
-        dd($this->cartRepository->products());
+        
     }
 
     /**

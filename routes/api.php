@@ -18,7 +18,7 @@ use App\Http\Controllers\Admin\CategoryController;
 |--------------------------------------------------------------------------
 */
 
-Route::get('/products', [ ProductController::class, 'index'])->middleware(['auth:api-admins']);
+Route::get('/products', [ ProductController::class, 'index']);
 Route::get('/products/{product}', [ ProductController::class, 'show']);
 Route::post('/register', [ UserAuthController::class, 'register' ])->name('user.register');
 Route::post('/login', [ UserAuthController::class, 'login' ])->name('user.login');
@@ -43,8 +43,10 @@ Route::prefix('admin')->group(function () {
     Route::post('/register', [ AdminAuthController::class, 'register' ])->name('admin.register');
     Route::post('/login', [ AdminAuthController::class, 'login' ])->name('admin.login');
 
-    Route::middleware(['auth:admin-api'])->group(function () {
-        Route::apiResource('products', AdminProductController::class);
-        Route::apiResource('categories', CategoryController::class);
+    Route::middleware(['auth:api-admins'])->group(function () {
+        Route::apiResources([
+            'products' => AdminProductController::class,
+            'categories' => CategoryController::class,
+            ]);
     });
 });

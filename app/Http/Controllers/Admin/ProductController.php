@@ -12,7 +12,6 @@ class ProductController extends Controller
 {
     public function __construct(
         private ProductRepositoryInterface $productRepository,
-        private Product $product,
         private ProductService $productService,
         private CategoryRepositoryInterface $categoryRepository,
     ){}
@@ -52,7 +51,7 @@ class ProductController extends Controller
         $imageSrc = $this->productService->storeFile($request->image);
 
         // create product data for save in database
-        $productData = $this->productService->createProductData($request->except(['image', 'category']), $image_url, $category->id);
+        $productData = $this->productService->createProductData($request->except(['image', 'category']), $imageSrc, $category->id);
         
         // save product in database
         $newProduct = $this->productRepository->create($productData);
