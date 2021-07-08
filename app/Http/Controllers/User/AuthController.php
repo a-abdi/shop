@@ -49,12 +49,12 @@ class AuthController extends Controller
         // get user with email
         $user = $this->userRepository->where('email', $request->email);
 
-        // check admin authorized
+        // check user authorized
         $this->authService->checkUserAuthorized($user, $request->password);
 
         // create access token
-        $token = $user->createToken('user')->accessToken;
-        
-        return $this->successResponse($token);
+        $user->token = $user->createToken('user')->accessToken;
+
+        return $this->successResponse($user);
     }
 }

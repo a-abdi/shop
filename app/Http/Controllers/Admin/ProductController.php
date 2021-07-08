@@ -56,9 +56,6 @@ class ProductController extends Controller
         // save product in database
         $newProduct = $this->productRepository->create($productData);
 
-        // Create http address for image.
-        $newProduct['image_src'] = asset($newProduct['image_src']);
-
         // return new product 
         return $this->successResponse($newProduct, __('messages.stored', [
             'name' => 'product'

@@ -39,6 +39,11 @@ class Product extends Model
         'admin_id',
     ];
 
+    public function getImageSrcAttribute($value)
+    {
+        return asset($value);
+    }
+
     /**
      * Get the carts for the product.
      */

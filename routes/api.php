@@ -47,6 +47,6 @@ Route::prefix('admin')->group(function () {
         Route::apiResources([
             'products' => AdminProductController::class,
             'categories' => CategoryController::class,
-            ]);
+        ]);
     });
 });
