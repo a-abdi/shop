@@ -13,6 +13,7 @@ return [
     'updated' => ':Name updated successfully.',
     'deleted' => ':Name deleted successfully.',
     'created' => ':Name created successfully.',
+    'added'   => ':Name added successfully.',
 
 
     // error message

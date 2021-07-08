@@ -52,9 +52,11 @@ class CartController extends Controller
         
         $cartData = $this->cartService->cartData($request->productId);
 
-        $newCart = $this->cartRepository->create($cartData);
+        $this->cartRepository->create($cartData);
+
+        $newCart = $this->cartRepository->getCart($cartData['user_id']);
         
-        return $this->successResponse($newCart, __('messages.created', [
+        return $this->successResponse($newCart, __('messages.added', [
             'name' => 'cart'
         ]), 201);
     }
@@ -88,7 +90,11 @@ class CartController extends Controller
 
         $this->cartRepository->destroy($cart->id);
 
-        return $this->successResponse(message: __('messages.deleted', [
+        $userId = Auth::id();
+
+        $carts = $this->cartRepository->getCart($userId);
+
+        return $this->successResponse($carts,  __('messages.deleted', [
             'name' => 'cart'
         ]));
     }
