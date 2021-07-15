@@ -21,8 +21,8 @@ class ProductService extends MainService
             'price'       => 'required|numeric|min:1|max:9999999999',
             'discount'    => 'nullable|numeric|min:0|max:9999999999',
             'quantity'    => 'required|numeric|min:1|max:9999999999',
-            'description' => 'required|string|min:10',
             'image'       => 'required|file|image',
+            'description' => 'required|string|min:10',
         ];
 
         $this->validate($data, $rule);
