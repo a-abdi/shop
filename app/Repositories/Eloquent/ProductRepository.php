@@ -11,4 +11,9 @@ class ProductRepository extends BaseRepository implements ProductRepositoryInter
     {
         parent::__construct($product);
     }
+
+    public function getProducts() 
+    {
+        return $this->product->with('category:id,name')->get();
+    }
 }
