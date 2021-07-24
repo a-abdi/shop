@@ -48,6 +48,24 @@ class AuthService extends MainService
     }
 
     /**
+     * Validate reset password data.
+     * 
+     * @param array
+     * @return App\Exceptions\InvalidArgumentException|true
+     */
+    public function validateResetPassword($data)
+    {
+        $rule = [
+            'password'              => 'required|confirmed|min:8|max:255',
+            'password_confirmation' => 'required'
+        ];
+
+        $this->validate($data, $rule);
+
+        return true;
+    }
+
+    /**
      * check user authorized.
      * 
      * @param object $user

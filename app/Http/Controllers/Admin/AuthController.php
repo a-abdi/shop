@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\Mail;
 use App\Mail\PasswordRecovery;
 use Illuminate\Support\Str;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\DB;
 use App\Contracts\Repositories\AdminRepositoryInterface;
 
@@ -73,7 +74,7 @@ class AuthController extends Controller
         ]);
             
         $passwordResetUrl = "http://192.168.1.136:3000/admin/reset-password/". $token;
-        
+
         Mail::to($request->email)->send(new PasswordRecovery($passwordResetUrl));
 
         return $this->successResponse(message: __('messages.reset_password'));
@@ -81,6 +82,28 @@ class AuthController extends Controller
 
     public function resetPassword(Request $request)
     {
-        
+        $this->authService->validateResetPassword($request->only([
+            'password', 'password_confirmation'
+        ]));
+
+        $resetPasswordToken = $request->token;
+
+        $email =  DB::table('password_resets')
+                    ->where('token', $resetPasswordToken)
+                    ->value('email');
+
+        $this->authService->checkExist($email, __('messages.not_found', [
+            'name' => 'token'
+        ]));
+
+        $admin = $this->adminRepository->where('email', $email);
+
+        $request['password'] = Hash::make($request->password);
+
+        $this->adminRepository->update($request->only(['password']), $admin);
+
+        return $this->successResponse(message: __('messages.changed', [
+            'name' => 'password'
+        ]));
     }
 }

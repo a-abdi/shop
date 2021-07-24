@@ -14,6 +14,7 @@ return [
     'deleted' => ':Name deleted successfully.',
     'created' => ':Name created successfully.',
     'added'   => ':Name added successfully.',
+    'changed' => ':Name changed successfully.',
 
 
     // error message
