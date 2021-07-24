@@ -44,6 +44,8 @@ Route::middleware(['auth:api'])->group(function () {
 Route::prefix('admin')->group(function () {
     Route::post('/register', [ AdminAuthController::class, 'register' ])->name('admin.register');
     Route::post('/login', [ AdminAuthController::class, 'login' ])->name('admin.login');
+    Route::post('/forgot-password', [ AdminAuthController::class, 'forgotPassword' ])->name('admin.forgotPassword');
+    Route::post('/reset-password', [ AdminAuthController::class, 'resetPassword' ])->name('admin.resetPassword');
 
     Route::middleware(['auth:api-admins'])->group(function () {
         Route::apiResources([

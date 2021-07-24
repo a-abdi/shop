@@ -77,8 +77,15 @@ class ProductController extends Controller
             'name' => 'product'
         ]));
 
-        // Create http address for image.
-        $product['image_src'] = asset($product['image_src']);
+        /**
+        * Get category name.
+        *
+        * @param  array  Select table column 
+        * @param  string  $id
+        * @param  int  $category_id
+        * @return Illuminate\Database\Eloquent\Collection
+        */
+        $product->category = $this->categoryRepository->search(['name'], 'id', $product->category_id);
 
         return $this->successResponse($product);
     }

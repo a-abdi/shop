@@ -5,6 +5,11 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Services\AuthService;
+use Illuminate\Support\Facades\Mail;
+use App\Mail\PasswordRecovery;
+use Illuminate\Support\Str;
+use Carbon\Carbon;
+use Illuminate\Support\Facades\DB;
 use App\Contracts\Repositories\AdminRepositoryInterface;
 
 
@@ -50,5 +55,32 @@ class AuthController extends Controller
         $token = $admin->createToken('admin')->accessToken;
         
         return $this->successResponse($token);
+    }
+
+    public function forgotPassword(Request $request)
+    {
+        $admin = $this->adminRepository->where('email', $request->email);
+
+        $this->authService->checkExist($admin, __('messages.not_found', [
+            'name' => 'email'
+        ]));
+
+        $token = Str::random(60);
+        DB::table('password_resets')->insert([
+            'email' => $request->email,
+            'token' => $token,
+            'created_at' => Carbon::now(),
+        ]);
+            
+        $passwordResetUrl = "http://192.168.1.136:3000/admin/reset-password/". $token;
+        
+        Mail::to($request->email)->send(new PasswordRecovery($passwordResetUrl));
+
+        return $this->successResponse(message: __('messages.reset_password'));
+    }
+
+    public function resetPassword(Request $request)
+    {
+        
     }
 }
