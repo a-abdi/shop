@@ -57,7 +57,6 @@ class AuthService extends MainService
     {
         $rule = [
             'password'              => 'required|confirmed|min:8|max:255',
-            'password_confirmation' => 'required'
         ];
 
         $this->validate($data, $rule);
@@ -66,7 +65,7 @@ class AuthService extends MainService
     }
 
     /**
-     * check user authorized.
+     * Check user authorized.
      * 
      * @param object $user
      * @param string $password
@@ -79,5 +78,16 @@ class AuthService extends MainService
         }
 
         return true;
+    }
+
+     /**
+     * Create new passwordReset link.
+     * 
+     * @param string $token
+     * @return string $link
+     */
+    public function passwordResetLink($token)
+    {
+        return $passwordResetUrl = "http://192.168.1.136:3000/admin/reset-password/". $token;
     }
 }

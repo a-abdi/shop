@@ -11,4 +11,9 @@ class PasswordResetRepository extends BaseRepository implements PasswordResetRep
     {
         parent::__construct($passwordreset);
     }
+
+    public function deleteToken($email)
+    {
+        return $this->passwordreset->where('email', $email)->delete();
+    }
 }

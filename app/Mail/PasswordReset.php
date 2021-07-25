@@ -7,7 +7,7 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
 
-class PasswordRecovery extends Mailable
+class PasswordReset extends Mailable
 {
     use Queueable, SerializesModels;
 
@@ -16,7 +16,7 @@ class PasswordRecovery extends Mailable
      *
      * @return void
      */
-    public function __construct(public $resetPasswordUrl)
+    public function __construct(public $passwordResetUrl)
     {
         //
     }
@@ -29,7 +29,7 @@ class PasswordRecovery extends Mailable
     public function build()
     {
         return $this->markdown('emails.password.recovery', [
-            'url' => $this->resetPasswordUrl,
+            'url' => $this->passwordResetUrl,
         ]);
     }
 }

@@ -5,19 +5,18 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Services\AuthService;
-use Illuminate\Support\Facades\Mail;
-use App\Mail\PasswordRecovery;
-use Illuminate\Support\Str;
-use Carbon\Carbon;
+use App\Mail\PasswordReset;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\DB;
 use App\Contracts\Repositories\AdminRepositoryInterface;
+use App\Contracts\Repositories\PasswordResetRepositoryInterface;
 
 
 class AuthController extends Controller
 {
     public function __construct(
         private AdminRepositoryInterface $adminRepository,
+        private PasswordResetRepositoryInterface $passwordResetRepository,
         private Authservice $authService,
     ){}
 
@@ -58,24 +57,36 @@ class AuthController extends Controller
         return $this->successResponse($token);
     }
 
+     /**
+     * Create token for password reset.
+     * Emails the password reset link.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return string
+     */
     public function forgotPassword(Request $request)
     {
         $admin = $this->adminRepository->where('email', $request->email);
-
+        
         $this->authService->checkExist($admin, __('messages.not_found', [
             'name' => 'email'
         ]));
-
-        $token = Str::random(60);
-        DB::table('password_resets')->insert([
+        
+        // If for this email token exist remove record.
+        $this->passwordResetRepository->deleteToken($request->email);
+        
+        $token = $this->authService->createToken(60);
+        
+        // create new token for email
+        $this->passwordResetRepository->create([
             'email' => $request->email,
             'token' => $token,
-            'created_at' => Carbon::now(),
         ]);
-            
-        $passwordResetUrl = "http://192.168.1.136:3000/admin/reset-password/". $token;
+        
+        // Create link for password reset
+        $link = $this->authService->passwordResetLink($token);
 
-        Mail::to($request->email)->send(new PasswordRecovery($passwordResetUrl));
+        $this->authService->sendMail($request->email, new PasswordReset($link));
 
         return $this->successResponse(message: __('messages.reset_password'));
     }

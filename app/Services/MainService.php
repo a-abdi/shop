@@ -7,6 +7,8 @@ use Illuminate\Support\Facades\Storage;
 use App\Exceptions\NotFoundException;
 use App\Exceptions\InvalidArgumentException;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Str;
+use Illuminate\Support\Facades\Mail;
 
 class MainService
 {
@@ -53,5 +55,27 @@ class MainService
         }
 
         return true;
+    }
+
+    /**
+     * Create token data.
+     *
+     * @param  int 
+     * @return string
+     */
+    public function createToken($tokenLength)
+    {
+        return Str::random($tokenLength);
+    }
+
+     /**
+     * Send email.
+     *
+     * @param  string $mail 
+     * @param  App\Mail 
+     */
+    public function sendMail($email, $mail)
+    {
+        Mail::to($email)->send($mail);
     }
 }
