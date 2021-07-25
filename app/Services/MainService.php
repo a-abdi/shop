@@ -9,6 +9,7 @@ use App\Exceptions\InvalidArgumentException;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\Hash;
 
 class MainService
 {
@@ -77,5 +78,10 @@ class MainService
     public function sendMail($email, $mail)
     {
         Mail::to($email)->send($mail);
+    }
+
+    public function makeHash($value)
+    {
+        return Hash::make($value);
     }
 }

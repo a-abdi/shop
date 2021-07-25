@@ -4,7 +4,6 @@ namespace App\Http\Controllers\User;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Hash;
 use App\Services\AuthService;
 use App\Contracts\Repositories\UserRepositoryInterface;
 
@@ -25,7 +24,7 @@ class AuthController extends Controller
     {
         $this->authService->validateRegister($request->all());
 
-        $request['password'] = Hash::make($request->password);
+        $request['password'] = $this->authService->makeHash($request->password);
 
         $this->userRepository->create($request->all());
 

@@ -56,7 +56,7 @@ class AuthService extends MainService
     public function validateResetPassword($data)
     {
         $rule = [
-            'password'              => 'required|confirmed|min:8|max:255',
+            'password' => 'required|confirmed|min:8|max:255',
         ];
 
         $this->validate($data, $rule);

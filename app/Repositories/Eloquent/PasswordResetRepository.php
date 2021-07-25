@@ -16,4 +16,9 @@ class PasswordResetRepository extends BaseRepository implements PasswordResetRep
     {
         return $this->passwordreset->where('email', $email)->delete();
     }
+
+    public function getEmail($token)
+    {
+        return $this->passwordreset->where('token', $token)->value('email');
+    }
 }

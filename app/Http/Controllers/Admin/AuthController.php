@@ -6,7 +6,6 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Services\AuthService;
 use App\Mail\PasswordReset;
-use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\DB;
 use App\Contracts\Repositories\AdminRepositoryInterface;
 use App\Contracts\Repositories\PasswordResetRepositoryInterface;
@@ -50,10 +49,10 @@ class AuthController extends Controller
 
         // check admin authorized
         $this->authService->checkUserAuthorized($admin, $request->password);
-
+        
         // create access token
         $token = $admin->createToken('admin')->accessToken;
-        
+
         return $this->successResponse($token);
     }
 
@@ -97,11 +96,7 @@ class AuthController extends Controller
             'password', 'password_confirmation'
         ]));
 
-        $resetPasswordToken = $request->token;
-
-        $email =  DB::table('password_resets')
-                    ->where('token', $resetPasswordToken)
-                    ->value('email');
+        $email = $this->passwordResetRepository->getEmail($request->token);
 
         $this->authService->checkExist($email, __('messages.not_found', [
             'name' => 'token'
@@ -109,9 +104,11 @@ class AuthController extends Controller
 
         $admin = $this->adminRepository->where('email', $email);
 
-        $request['password'] = Hash::make($request->password);
+        $password = $this->authService->makeHash($request->password);
 
-        $this->adminRepository->update($request->only(['password']), $admin);
+        $this->adminRepository->update(['password' => $password], $admin);
+
+        $this->passwordResetRepository->deleteToken($email);
 
         return $this->successResponse(message: __('messages.changed', [
             'name' => 'password'
