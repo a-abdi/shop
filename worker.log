@@ -1,0 +1,148 @@
+[2021-07-27 09:59:21][4] Processing: App\Jobs\PasswordReset
+[2021-07-27 09:59:25][4] Processed:  App\Jobs\PasswordReset
+[2021-07-27 09:59:25][5] Processing: App\Jobs\PasswordReset
+[2021-07-27 09:59:27][6] Processing: App\Jobs\PasswordReset
+[2021-07-27 09:59:28][5] Processed:  App\Jobs\PasswordReset
+[2021-07-27 09:59:28][7] Processing: App\Jobs\PasswordReset
+[2021-07-27 09:59:30][8] Processing: App\Jobs\PasswordReset
+[2021-07-27 09:59:30][9] Processing: App\Jobs\PasswordReset
+[2021-07-27 09:59:30][10] Processing: App\Jobs\PasswordReset
+[2021-07-27 09:59:30][6] Processed:  App\Jobs\PasswordReset
+[2021-07-27 09:59:31][7] Processed:  App\Jobs\PasswordReset
+[2021-07-27 09:59:31][11] Processing: App\Jobs\PasswordReset
+[2021-07-27 09:59:33][12] Processing: App\Jobs\PasswordReset
+[2021-07-27 09:59:33][13] Processing: App\Jobs\PasswordReset
+[2021-07-27 09:59:33][14] Processing: App\Jobs\PasswordReset
+[2021-07-27 09:59:34][8] Processed:  App\Jobs\PasswordReset
+[2021-07-27 09:59:34][15] Processing: App\Jobs\PasswordReset
+[2021-07-27 09:59:34][16] Processing: App\Jobs\PasswordReset
+[2021-07-27 09:59:34][17] Processing: App\Jobs\PasswordReset
+[2021-07-27 09:59:37][12] Processed:  App\Jobs\PasswordReset
+[2021-07-27 09:59:37][13] Processed:  App\Jobs\PasswordReset
+[2021-07-27 09:59:37][14] Processed:  App\Jobs\PasswordReset
+[2021-07-27 09:59:37][15] Processed:  App\Jobs\PasswordReset
+[2021-07-27 09:59:37][17] Processed:  App\Jobs\PasswordReset
+[2021-07-27 09:59:38][18] Processing: App\Jobs\PasswordReset
+[2021-07-27 09:59:40][18] Failed:     App\Jobs\PasswordReset
+[2021-07-27 10:06:22][19] Processing: App\Jobs\PasswordReset
+[2021-07-27 10:06:22][20] Processing: App\Jobs\PasswordReset
+[2021-07-27 10:06:22][21] Processing: App\Jobs\PasswordReset
+[2021-07-27 10:06:22][22] Processing: App\Jobs\PasswordReset
+[2021-07-27 10:06:23][23] Processing: App\Jobs\PasswordReset
+[2021-07-27 10:06:25][19] Processed:  App\Jobs\PasswordReset
+[2021-07-27 10:06:25][24] Processing: App\Jobs\PasswordReset
+[2021-07-27 10:06:25][25] Processing: App\Jobs\PasswordReset
+[2021-07-27 10:06:25][21] Processed:  App\Jobs\PasswordReset
+[2021-07-27 10:06:25][26] Processing: App\Jobs\PasswordReset
+[2021-07-27 10:06:26][20] Processed:  App\Jobs\PasswordReset
+[2021-07-27 10:06:26][22] Processed:  App\Jobs\PasswordReset
+[2021-07-27 10:06:26][23] Processed:  App\Jobs\PasswordReset
+[2021-07-27 10:06:28][27] Processing: App\Jobs\PasswordReset
+[2021-07-27 10:06:28][28] Processing: App\Jobs\PasswordReset
+[2021-07-27 10:06:28][29] Processing: App\Jobs\PasswordReset
+[2021-07-27 10:06:30][30] Processing: App\Jobs\PasswordReset
+[2021-07-27 10:06:31][31] Processing: App\Jobs\PasswordReset
+[2021-07-27 10:06:31][32] Processing: App\Jobs\PasswordReset
+[2021-07-27 10:06:33][30] Failed:     App\Jobs\PasswordReset
+[2021-07-27 10:06:34][31] Failed:     App\Jobs\PasswordReset
+[2021-07-27 10:06:34][32] Failed:     App\Jobs\PasswordReset
+[2021-07-27 10:10:32][33] Processing: App\Jobs\PasswordReset
+[2021-07-27 10:10:35][33] Processed:  App\Jobs\PasswordReset
+[2021-07-27 13:22:41][34] Processing: App\Jobs\PasswordReset
+[2021-07-27 13:22:41][35] Processing: App\Jobs\PasswordReset
+[2021-07-27 13:22:42][36] Processing: App\Jobs\PasswordReset
+[2021-07-27 13:22:42][36] Failed:     App\Jobs\PasswordReset
+[2021-07-27 13:24:08][37] Processing: App\Jobs\PasswordReset
+[2021-07-27 13:24:09][38] Processing: App\Jobs\PasswordReset
+[2021-07-27 13:24:09][39] Processing: App\Jobs\PasswordReset
+[2021-07-27 13:24:09][39] Failed:     App\Jobs\PasswordReset
+[2021-07-27 13:51:02][40] Processing: App\Jobs\PasswordReset
+[2021-07-27 13:51:02][41] Processing: App\Jobs\PasswordReset
+[2021-07-27 13:51:02][42] Processing: App\Jobs\PasswordReset
+[2021-07-27 13:51:02][42] Failed:     App\Jobs\PasswordReset
+[2021-07-27 13:52:26][43] Processing: App\Jobs\PasswordReset
+/var/www/shop/app/Jobs/PasswordReset.php:36:
+string(3) "ali"
+[2021-07-27 13:52:26][44] Processing: App\Jobs\PasswordReset
+[2021-07-27 13:52:26][45] Processing: App\Jobs\PasswordReset
+[2021-07-27 13:52:26][45] Failed:     App\Jobs\PasswordReset
+[2021-07-27 13:53:43][46] Processing: App\Jobs\PasswordReset
+/var/www/shop/app/Jobs/PasswordReset.php:36:
+string(3) "ali"
+[2021-07-27 13:53:43][47] Processing: App\Jobs\PasswordReset
+/var/www/shop/app/Jobs/PasswordReset.php:36:
+string(3) "ali"
+[2021-07-27 13:53:43][48] Processing: App\Jobs\PasswordReset
+/var/www/shop/app/Jobs/PasswordReset.php:36:
+string(3) "ali"
+[2021-07-27 13:53:43][48] Failed:     App\Jobs\PasswordReset
+[2021-07-27 13:54:56][49] Processing: App\Jobs\PasswordReset
+[2021-07-27 13:54:57][50] Processing: App\Jobs\PasswordReset
+[2021-07-27 13:54:57][51] Processing: App\Jobs\PasswordReset
+[2021-07-27 13:54:57][51] Failed:     App\Jobs\PasswordReset
+[2021-07-27 13:55:53][52] Processing: App\Jobs\PasswordReset
+/var/www/shop/app/Jobs/PasswordReset.php:37:
+class App\Services\AuthService#885 (0) {
+}
+[2021-07-27 13:55:53][53] Processing: App\Jobs\PasswordReset
+/var/www/shop/app/Jobs/PasswordReset.php:37:
+class App\Services\AuthService#878 (0) {
+}
+[2021-07-27 13:55:53][54] Processing: App\Jobs\PasswordReset
+/var/www/shop/app/Jobs/PasswordReset.php:37:
+class App\Services\AuthService#907 (0) {
+}
+[2021-07-27 13:55:53][54] Failed:     App\Jobs\PasswordReset
+[2021-07-27 13:57:23][55] Processing: App\Jobs\PasswordReset
+/var/www/shop/app/Jobs/PasswordReset.php:38:
+class App\Services\AuthService#885 (0) {
+}
+[2021-07-27 13:57:23][56] Processing: App\Jobs\PasswordReset
+/var/www/shop/app/Jobs/PasswordReset.php:38:
+class App\Services\AuthService#882 (0) {
+}
+[2021-07-27 13:57:23][57] Processing: App\Jobs\PasswordReset
+/var/www/shop/app/Jobs/PasswordReset.php:38:
+class App\Services\AuthService#907 (0) {
+}
+[2021-07-27 13:57:23][57] Failed:     App\Jobs\PasswordReset
+[2021-07-27 13:58:32][58] Processing: App\Jobs\PasswordReset
+[2021-07-27 13:58:32][59] Processing: App\Jobs\PasswordReset
+[2021-07-27 13:58:32][60] Processing: App\Jobs\PasswordReset
+[2021-07-27 13:58:32][60] Failed:     App\Jobs\PasswordReset
+[2021-07-27 14:00:08][61] Processing: App\Jobs\PasswordReset
+/var/www/shop/app/Jobs/PasswordReset.php:37:
+string(51) "http://192.168.1.137:3000/admin/reset-password/sdsd"
+[2021-07-27 14:00:08][62] Processing: App\Jobs\PasswordReset
+/var/www/shop/app/Jobs/PasswordReset.php:37:
+string(51) "http://192.168.1.137:3000/admin/reset-password/sdsd"
+[2021-07-27 14:00:08][63] Processing: App\Jobs\PasswordReset
+/var/www/shop/app/Jobs/PasswordReset.php:37:
+string(51) "http://192.168.1.137:3000/admin/reset-password/sdsd"
+[2021-07-27 14:00:08][63] Failed:     App\Jobs\PasswordReset
+[2021-07-27 14:04:41][64] Processing: App\Jobs\PasswordReset
+/var/www/shop/app/Jobs/PasswordReset.php:37:
+string(51) "http://192.168.1.137:3000/admin/reset-password/sdsd"
+sdssssssssssss/var/www/shop/app/Services/MainService.php:82:
+string(14) "fake@gmail.com"
+[2021-07-27 14:04:46][64] Processed:  App\Jobs\PasswordReset
+[2021-07-27 14:06:41][65] Processing: App\Jobs\PasswordReset
+[2021-07-27 14:06:42][66] Processing: App\Jobs\PasswordReset
+[2021-07-27 14:06:42][67] Processing: App\Jobs\PasswordReset
+[2021-07-27 14:06:42][67] Failed:     App\Jobs\PasswordReset
+[2021-07-27 14:07:15][68] Processing: App\Jobs\PasswordReset
+[2021-07-27 14:07:15][69] Processing: App\Jobs\PasswordReset
+[2021-07-27 14:07:15][70] Processing: App\Jobs\PasswordReset
+[2021-07-27 14:07:15][70] Failed:     App\Jobs\PasswordReset
+[2021-07-27 14:09:18][71] Processing: App\Jobs\PasswordReset
+[2021-07-27 14:09:22][71] Processed:  App\Jobs\PasswordReset
+[2021-07-27 14:09:34][72] Processing: App\Jobs\PasswordReset
+[2021-07-27 14:09:34][73] Processing: App\Jobs\PasswordReset
+[2021-07-27 14:09:37][72] Processed:  App\Jobs\PasswordReset
+[2021-07-27 14:09:37][73] Processed:  App\Jobs\PasswordReset
+[2021-07-27 14:10:09][74] Processing: App\Jobs\PasswordReset
+[2021-07-27 14:10:09][75] Processing: App\Jobs\PasswordReset
+[2021-07-27 14:10:09][76] Processing: App\Jobs\PasswordReset
+[2021-07-27 14:10:10][76] Failed:     App\Jobs\PasswordReset
+[2021-07-27 14:10:41][77] Processing: App\Jobs\PasswordReset
+[2021-07-27 14:10:45][77] Processed:  App\Jobs\PasswordReset

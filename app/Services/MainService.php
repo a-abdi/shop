@@ -74,6 +74,7 @@ class MainService
      *
      * @param  string $mail 
      * @param  App\Mail 
+     * @return void
      */
     public function sendMail($email, $mail)
     {
