@@ -70,17 +70,11 @@ class MainService
     }
 
      /**
-     * Send email.
+     * Make hash value.
      *
-     * @param  string $mail 
-     * @param  App\Mail 
-     * @return void
+     * @param  string  
+     * @return string
      */
-    public function sendMail($email, $mail)
-    {
-        Mail::to($email)->send($mail);
-    }
-
     public function makeHash($value)
     {
         return Hash::make($value);

@@ -9,22 +9,23 @@ use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
 use App\Mail\PasswordReset as MailPasswordReset;
+use App\Services\MailService;
 
-class PasswordReset implements ShouldQueue
+class SendMailPasswordReset implements ShouldQueue
 {
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
 
-    protected $authService;
     /**
      * Create a new job instance.
      *
      * @return void
      */
     public function __construct(
-        private $passwordReset,
+        private $email,
+        private $link,
     )
     {
-        $this->authService = resolve('AuthService');
+
     }
 
     /**
@@ -32,11 +33,11 @@ class PasswordReset implements ShouldQueue
      *
      * @return void
      */
-    public function handle()
+    public function handle(MailService $mailService)
     {
-        $this->authService->sendMail(
-            $this->passwordReset->email, 
-            new MailPasswordReset($this->passwordReset->link)
+        $mailService->sendMail(
+            $this->email, 
+            new MailPasswordReset($this->link)
         );
     }
 }

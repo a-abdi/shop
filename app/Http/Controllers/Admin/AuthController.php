@@ -5,8 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Services\AuthService;
-use App\Jobs\PasswordReset;
-use Illuminate\Support\Facades\App;
+use App\Jobs\SendMailPasswordReset;
 use App\Contracts\Repositories\AdminRepositoryInterface;
 use App\Contracts\Repositories\PasswordResetRepositoryInterface;
 
@@ -82,14 +81,10 @@ class AuthController extends Controller
             'token' => $token,
         ]);
         
-        $passwordReset = new \stdClass;
+        $email = $request->email;
+        $link = $this->authService->passwordResetLink($token);
 
-        // Create link for password reset
-        $passwordReset->link = $this->authService->passwordResetLink($token);
-
-        $passwordReset->email = $request->email;
-
-        dispatch(new PasswordReset($passwordReset));
+        dispatch(new SendMailPasswordReset($email, $link));
 
         return $this->successResponse(message: __('messages.reset_password'));
     }

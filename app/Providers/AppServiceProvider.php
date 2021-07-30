@@ -4,8 +4,8 @@ namespace App\Providers;
 
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Support\ServiceProvider;
-use App\Services\AuthService;
-use App\Jobs\PasswordReset;
+use App\Services\MailService;
+use App\Jobs\SendMailPasswordReset;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -16,7 +16,7 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        $this->app->bind('AuthService', AuthService::class);
+        // $this->app->bind('AuthService', AuthService::class);
     }
 
     /**
@@ -27,5 +27,9 @@ class AppServiceProvider extends ServiceProvider
     public function boot()
     {
         Schema::defaultStringLength(191);
+
+        $this->app->bindMethod([SendMailPasswordReset::class, 'handle'], function ($job, $app) {
+            return $job->handle($app->make(MailService::class));
+        });
     }
 }
