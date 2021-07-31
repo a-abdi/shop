@@ -4,6 +4,7 @@ namespace App\Services;
 
 use Exception;
 use Illuminate\Support\Facades\Mail;
+use Illuminate\Contracts\Mail\Mailable;
 
 class MailService
 {
@@ -14,7 +15,7 @@ class MailService
      * @param  App\Mail 
      * @return void
      */
-    public function sendMail($email, $mail)
+    public function sendMail($email, Mailable $mail)
     {
         Mail::to($email)->send($mail);
     }

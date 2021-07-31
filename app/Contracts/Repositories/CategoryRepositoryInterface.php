@@ -2,7 +2,9 @@
 
 namespace App\Contracts\Repositories;
 
-interface CategoryRepositoryInterface
+use App\Contracts\Repositories\BaseRepositoryInterface;
+
+interface CategoryRepositoryInterface extends BaseRepositoryInterface
 {
     
 }

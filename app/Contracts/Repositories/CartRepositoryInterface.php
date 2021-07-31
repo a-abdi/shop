@@ -2,7 +2,9 @@
 
 namespace App\Contracts\Repositories;
 
-interface CartRepositoryInterface
+use App\Contracts\Repositories\BaseRepositoryInterface;
+
+interface CartRepositoryInterface extends BaseRepositoryInterface
 {
-    
+    public function getProductsCart($userId);
 }

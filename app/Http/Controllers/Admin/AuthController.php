@@ -6,9 +6,9 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Services\AuthService;
 use App\Jobs\SendMailPasswordReset;
+use App\Jobs\ClearTokenPasswordReset;
 use App\Contracts\Repositories\AdminRepositoryInterface;
 use App\Contracts\Repositories\PasswordResetRepositoryInterface;
-
 
 class AuthController extends Controller
 {
@@ -80,11 +80,14 @@ class AuthController extends Controller
             'email' => $request->email,
             'token' => $token,
         ]);
-        
-        $email = $request->email;
-        $link = $this->authService->passwordResetLink($token);
 
-        dispatch(new SendMailPasswordReset($email, $link));
+        $email = $request->email;
+
+        $link = $this->authService->passwordResetLink($token);
+        
+        ClearTokenPasswordReset::dispatch($email)->delay(now()->addMinutes(5));
+        
+        SendMailPasswordReset::dispatch($email, $link);
 
         return $this->successResponse(message: __('messages.reset_password'));
     }

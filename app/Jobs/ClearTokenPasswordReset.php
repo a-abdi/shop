@@ -8,10 +8,9 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
-use App\Mail\PasswordReset as MailPasswordReset;
-use App\Services\MailService;
+use App\Repositories\Eloquent\PasswordResetRepository;
 
-class SendMailPasswordReset implements ShouldQueue
+class ClearTokenPasswordReset implements ShouldQueue
 {
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
 
@@ -20,9 +19,9 @@ class SendMailPasswordReset implements ShouldQueue
      *
      * @return void
      */
-    public function __construct(private $email, private $link,)
+    public function __construct(private $email)
     {
-        // 
+        //
     }
 
     /**
@@ -30,11 +29,8 @@ class SendMailPasswordReset implements ShouldQueue
      *
      * @return void
      */
-    public function handle(MailService $mailService)
+    public function handle(PasswordResetRepository $passwordResetRepository)
     {
-        $mailService->sendMail(
-            $this->email, 
-            new MailPasswordReset($this->link)
-        );
+        $passwordResetRepository->deleteToken($this->email);
     }
 }

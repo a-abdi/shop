@@ -2,7 +2,9 @@
 
 namespace App\Contracts\Repositories;
 
-interface ProductRepositoryInterface
+use App\Contracts\Repositories\BaseRepositoryInterface;
+
+interface ProductRepositoryInterface extends BaseRepositoryInterface
 {
-    
+    public function getProducts();
 }
