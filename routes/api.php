@@ -24,6 +24,8 @@ Route::get('/products/{product}', [ ProductController::class, 'show']);
 Route::get('/categories', [ CategoryController::class, 'index']);
 Route::post('/register', [ UserAuthController::class, 'register' ])->name('user.register');
 Route::post('/login', [ UserAuthController::class, 'login' ])->name('user.login');
+Route::post('/forgot-password', [ UserAuthController::class, 'forgotPassword' ])->name('user.forgotPassword');
+Route::post('/reset-password', [ UserAuthController::class, 'resetPassword' ])->name('user.resetPassword');
 
 /*
 |--------------------------------------------------------------------------

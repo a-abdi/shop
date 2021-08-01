@@ -83,7 +83,7 @@ class AuthController extends Controller
 
         $email = $request->email;
 
-        $link = $this->authService->passwordResetLink($token);
+        $link = $this->authService->adminPasswordResetLink($token);
         
         ClearTokenPasswordReset::dispatch($email)->delay(now()->addMinutes(5));
         

@@ -86,8 +86,19 @@ class AuthService extends MainService
      * @param string $token
      * @return string $link
      */
-    public function passwordResetLink($token)
+    public function adminPasswordResetLink($token)
     {
-        return $passwordResetUrl = "http://192.168.1.137:3000/admin/reset-password/". $token;
+        return $passwordResetUrl = "http://192.168.1.138:3000/admin/reset-password/". $token;
+    }
+
+     /**
+     * Create new passwordReset link.
+     * 
+     * @param string $token
+     * @return string $link
+     */
+    public function userPasswordResetLink($token)
+    {
+        return $passwordResetUrl = "http://192.168.1.138:3000/reset-password/". $token;
     }
 }
