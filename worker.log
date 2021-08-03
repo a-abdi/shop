@@ -365,3 +365,7 @@ string(14) "fake@gmail.com"
 [2021-08-01 17:17:46][76475b83-5eeb-4bd4-ab63-9e73ad861e74] Processed:  App\Jobs\ClearTokenPasswordReset
 [2021-08-01 17:17:49][eaab5a82-818c-4bf6-ad32-7acb2caf9637] Processing: App\Jobs\ClearTokenPasswordReset
 [2021-08-01 17:17:49][eaab5a82-818c-4bf6-ad32-7acb2caf9637] Processed:  App\Jobs\ClearTokenPasswordReset
+[2021-08-01 17:26:58][87dbcdb0-da67-4294-877a-c3a2b37fb19d] Processing: App\Jobs\SendMailPasswordReset
+[2021-08-01 17:27:02][87dbcdb0-da67-4294-877a-c3a2b37fb19d] Processed:  App\Jobs\SendMailPasswordReset
+[2021-08-01 17:31:58][db53eb68-2b8d-4607-b49c-ebb208635989] Processing: App\Jobs\ClearTokenPasswordReset
+[2021-08-01 17:31:59][db53eb68-2b8d-4607-b49c-ebb208635989] Processed:  App\Jobs\ClearTokenPasswordReset

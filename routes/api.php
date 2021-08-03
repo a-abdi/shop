@@ -50,9 +50,8 @@ Route::prefix('admin')->group(function () {
     Route::post('/reset-password', [ AdminAuthController::class, 'resetPassword' ])->name('admin.resetPassword');
 
     Route::middleware(['auth:api-admins'])->group(function () {
-        Route::apiResources([
-            'products' => AdminProductController::class,
-            'categories' => AdminCategoryController::class,
-        ]);
+        Route::post('/products/{productId}', [AdminProductController::class, 'update']);
+        Route::apiResource('products', AdminProductController::class)->except(['update']);
+        Route::apiResource('categories', AdminCategoryController::class);
     });
 });
