@@ -108,7 +108,23 @@ class ProductController extends Controller
             'name' => 'product'
         ]));
 
-        $this->productRepository->update($request->except('image'), $product);
+        if($request->category) {
+            $category = $this->categoryRepository->where('name', $request->category);
+
+            // check exist category
+            $this->productService->checkExist($category, __('messages.not_found', [
+                'name' => 'category'
+            ]));
+            $request['category_id'] = $category->id;
+        }
+
+        if($request->image) {
+            $imageSrc = $this->productService->storeFile($request->image);
+
+            $request['image_src'] = $imageSrc;
+        }
+
+        $this->productRepository->update($request->except(['image', 'category']), $product);
 
         return $this->successResponse(message: __('messages.updated', [
             'name' => 'product'

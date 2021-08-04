@@ -44,7 +44,7 @@ class ProductService extends MainService
             'discount'    => 'nullable|numeric|min:0|max:9999999999',
             'quantity'    => 'nullable|numeric|min:1|max:9999999999',
             'description' => 'nullable|string|min:10',
-            // 'image'       => 'nullable|file|image',
+            'image'       => 'nullable|file|image',
         ];
 
         $this->validate($data, $rule);
@@ -62,10 +62,9 @@ class ProductService extends MainService
      */
     public function createProductData($data, $imageSrc, $categoryId)
     {
-
         $productData = array_merge($data, [
                 "product_code" => Str::random(8),
-                'admin_id'      => Auth::id(),
+                'admin_id'     => Auth::id(),
                 'category_id'  => $categoryId,
                 "image_src"    => $imageSrc,
             ]);
