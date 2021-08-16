@@ -12,6 +12,7 @@ use App\Http\Controllers\User\CartController as UserCartController;
 use App\Http\Controllers\Admin\AuthController as AdminAuthController;
 use App\Http\Controllers\Admin\ProductController as AdminProductController;
 use App\Http\Controllers\Admin\CategoryController as AdminCategoryController;
+use App\Http\Controllers\Admin\UserController as AdminUserController;
 
 /*
 |--------------------------------------------------------------------------
@@ -52,6 +53,9 @@ Route::prefix('admin')->group(function () {
     Route::middleware(['auth:api-admins'])->group(function () {
         Route::post('/products/{productId}', [AdminProductController::class, 'update']);
         Route::apiResource('products', AdminProductController::class)->except(['update']);
-        Route::apiResource('categories', AdminCategoryController::class);
+        Route::apiResources([
+            'categories'=> AdminCategoryController::class,
+            'users' => AdminUserController::class,
+        ]);
     });
 });
