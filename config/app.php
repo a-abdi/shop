@@ -182,6 +182,7 @@ return [
         App\Providers\Repositories\UserServiceProvider::class,
         App\Providers\Repositories\CartServiceProvider::class,
         App\Providers\Repositories\PasswordResetServiceProvider::class,
+        App\Providers\Repositories\PersonalInformationServiceProvider::class,
     ],
 
     /*

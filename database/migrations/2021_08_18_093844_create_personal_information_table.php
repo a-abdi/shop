@@ -15,6 +15,12 @@ class CreatePersonalInformationTable extends Migration
     {
         Schema::create('personal_information', function (Blueprint $table) {
             $table->id();
+            $table->unsignedBigInteger('user_id');
+            $table->string('phone_number', 12)->unique()->nullable();
+            $table->text('address')->nullable();
+            $table->enum('gender', ['male', 'female', 'other'])->nullable();
+            $table->date('birthday')->nullable();
+            $table->text('image_src')->nullable();
             $table->timestamps();
         });
     }

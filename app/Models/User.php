@@ -8,7 +8,7 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Passport\HasApiTokens;
 use App\Models\Cart;
-use App\Models\Product;
+use App\Models\PersonalInformation;
 
 class User extends Authenticatable
 {
@@ -50,5 +50,13 @@ class User extends Authenticatable
     public function carts()
     {
         return $this->hasMany(Cart::class);
+    }
+
+    /**
+     * Get the personal information associated with the user.
+     */
+    public function personalInformation()
+    {
+        return $this->hasOne(PersonalInformation::class);
     }
 }
