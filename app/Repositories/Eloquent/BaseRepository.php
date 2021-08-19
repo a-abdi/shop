@@ -74,4 +74,9 @@ class BaseRepository implements BaseRepositoryInterface
     {
         return $this->model->offset($offset)->limit($limit)->get();
     }
+
+    public function updateOrCreate(array $if, array $value)
+    {
+        return $this->model->updateOrCreate($if, $value);
+    }
 }

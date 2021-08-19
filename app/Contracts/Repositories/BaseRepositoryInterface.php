@@ -27,4 +27,6 @@ interface BaseRepositoryInterface
     public function where($type, $value);
 
     public function getByeOffsetLimit($offset, $limit);
+
+    public function updateOrCreate(array $if, array $value);
 }

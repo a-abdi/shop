@@ -48,7 +48,7 @@ class ProductController extends Controller
         ]));
 
         // store image in disk
-        $imageSrc = $this->productService->storeFile($request->image);
+        $imageSrc = $this->productService->storeFile($request->image, 'products');
 
         // create product data for save in database
         $productData = $this->productService->createProductData($request->except(['image', 'category']), $imageSrc, $category->id);

@@ -17,12 +17,13 @@ class MainService
      * Store file to disk.
      * Return ulr file.
      * 
-     * @param string
+     * @param mixed $file
+     * @param string $folderName
      * @return string
      */
-    public function storeFile($file)
+    public function storeFile(mixed $file, string $folderName = 'images')
     {
-        return Storage::url($file->store('images', 'public'));
+        return Storage::url($file->store($folderName, 'public'));
     }
 
     /**
@@ -47,7 +48,7 @@ class MainService
      * @param array $rule
      * @return App\Exceptions\InvalidArgumentException|true
      */
-    public function validate($data, $rule)
+    public function validate(array $data, array $rule)
     {
         $validator = Validator::make($data, $rule);
 

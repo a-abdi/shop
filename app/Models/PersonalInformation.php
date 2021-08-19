@@ -35,7 +35,9 @@ class PersonalInformation extends Model
 
     public function getImageSrcAttribute($value)
     {
-        return asset($value);
+        if ($value) {
+            return asset($value);
+        }
     }
 
     /**
