@@ -11,7 +11,7 @@ use App\Contracts\Repositories\PersonalInformationRepositoryInterface;
 class PersonalInformationController extends Controller
 {
     public function __construct(
-        private PersonalInformationRepositoryInterface $PersonalInformationRepository,
+        private PersonalInformationRepositoryInterface $personalInformationRepository,
         private PersonalInformationService $personalInformationService,
     ){}
 
@@ -34,7 +34,7 @@ class PersonalInformationController extends Controller
 
         $userId = Auth::id();
         
-        $personalInformation = $this->PersonalInformationRepository->updateOrCreate(
+        $personalInformation = $this->personalInformationRepository->updateOrCreate(
             [ 'user_id' => $userId ],
             $request->except('image'),
         );

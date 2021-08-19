@@ -9,6 +9,7 @@ use App\Jobs\SendMailPasswordReset;
 use App\Jobs\ClearTokenPasswordReset;
 use App\Contracts\Repositories\UserRepositoryInterface;
 use App\Contracts\Repositories\PasswordResetRepositoryInterface;
+use App\Contracts\Repositories\PersonalInformationRepositoryInterface;
 
 class AuthController extends Controller
 {
@@ -16,6 +17,7 @@ class AuthController extends Controller
         private Authservice $authService,
         private UserRepositoryInterface $userRepository,
         private PasswordResetRepositoryInterface $passwordResetRepository,
+        private PersonalInformationRepositoryInterface $personalInformationRepository,
     ){}
 
     /**
@@ -46,17 +48,20 @@ class AuthController extends Controller
      */
     public function login(Request $request)
     {
-        // validate login data
+        // Validate login data.
         $this->authService->validateLogin($request->only(['email', 'password']));
 
-        // get user with email
+        // Get user with email.
         $user = $this->userRepository->where('email', $request->email);
 
-        // check user authorized
+        // check user authorized.
         $this->authService->checkUserAuthorized($user, $request->password);
 
-        // create access token
+        // Create access token.
         $user->token = $user->createToken('user')->accessToken;
+
+        // Get user personal information.
+        $user->information = $this->personalInformationRepository->where('user_id', $user->id);
 
         return $this->successResponse($user);
     }
