@@ -6,9 +6,16 @@ use Exception;
 use App\Services\MainService;
 use Illuminate\Support\Facades\Hash;
 use App\Exceptions\UnauthorizedException;
+use App\Exceptions\InvalidArgumentException;
 
 class AuthService extends MainService
 {
+    private const USER_RULE = [
+        'name'      => 'required|string|min:3|max:100',
+        'email'     => 'required|email|max:255|unique:users',
+        'password'  => 'required|confirmed|min:8|max:255',
+    ];
+
     /**
      * Validate register data.
      *
@@ -17,14 +24,7 @@ class AuthService extends MainService
      */
     public function validateRegister($data)
     {
-        $rule = [
-            'name'                  => 'required|string|min:3|max:100',
-            'email'                 => 'required|email|max:255|unique:users',
-            'password'              => 'required|confirmed|min:8|max:255',
-            'password_confirmation' => 'required'
-        ];
-
-        $this->validate($data, $rule);
+        $this->validate($data, self::USER_RULE);
 
         return true;
     }
@@ -38,25 +38,8 @@ class AuthService extends MainService
     public function validateLogin($data)
     {
         $rule = [
-            'email'    => 'required|email|',
+            'email'    => 'required|email|max:255',
             'password' => 'required',
-        ];
-
-        $this->validate($data, $rule);
-
-        return true;
-    }
-
-    /**
-     * Validate reset password data.
-     * 
-     * @param array
-     * @return App\Exceptions\InvalidArgumentException|true
-     */
-    public function validateResetPassword($data)
-    {
-        $rule = [
-            'password' => 'required|confirmed|min:8|max:255',
         ];
 
         $this->validate($data, $rule);
@@ -101,4 +84,47 @@ class AuthService extends MainService
     {
         return $passwordResetUrl = "http://192.168.1.138:3000/reset-password/". $token;
     }
+
+    /**
+     * Validate password data.
+     * 
+     * @param array
+     * @return App\Exceptions\InvalidArgumentException|true
+     */
+    public function validatePassword($data)
+    {
+        $this->validate($data, ["password" => self::USER_RULE['password']]);
+
+        return true;
+    }
+
+    /**
+     * Validate new password data.
+     * 
+     * @param array
+     * @return App\Exceptions\InvalidArgumentException|true
+     */
+    public function validateUserUpdate($request)
+    {
+        if ($request->name) {
+            $this->validate($request->only('name'), ["name" => self::USER_RULE['name']]);
+            return true;
+        }
+
+        if ($request->email) {
+            $this->validate($request->only('email'), ["email" => self::USER_RULE['email']]);
+            return true;
+        }
+
+        if ($request->new_password) {
+            $this->validate(
+                $request->only(['new_password', 'new_password_confirmation']), 
+                ["new_password" => self::USER_RULE['password']]
+            );
+            $request['password'] =$this->makeHash($request->new_password);
+            return true;
+        }
+        
+        throw new InvalidArgumentException();
+    } 
 }

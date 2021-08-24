@@ -16,7 +16,7 @@ interface BaseRepositoryInterface
 
     public function setModel($model);
 
-    public function update(array $data, $id);
+    public function update(array $data, object $entity);
 
     public function with($relations);
 

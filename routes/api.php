@@ -6,6 +6,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\CategoryController;
 
+use App\Http\Controllers\User\UserController;
 use App\Http\Controllers\User\AuthController as UserAuthController;
 use App\Http\Controllers\User\CartController as UserCartController;
 use App\Http\Controllers\User\PersonalInformationController as UserPersonalInformationController;
@@ -37,7 +38,8 @@ Route::post('/reset-password', [ UserAuthController::class, 'resetPassword' ])->
 
 Route::middleware(['auth:api'])->group(function () {
     Route::apiResource('carts', UserCartController::class)->except(['show']);
-    Route::post('/profiles', [ UserPersonalInformationController::class, 'updateOrCreate' ]);
+    Route::post('/personal-information', [ UserPersonalInformationController::class, 'updateOrCreate' ]);
+    Route::patch('/user', [ UserController::class, 'update']);
 });
 
 /*

@@ -2,13 +2,11 @@
 
 namespace App\Services;
 
-use Exception;
 use Illuminate\Support\Facades\Storage;
 use App\Exceptions\NotFoundException;
 use App\Exceptions\InvalidArgumentException;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Str;
-use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Hash;
 
 class MainService

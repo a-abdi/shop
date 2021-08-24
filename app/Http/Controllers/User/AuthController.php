@@ -32,7 +32,9 @@ class AuthController extends Controller
 
         $request['password'] = $this->authService->makeHash($request->password);
 
-        $this->userRepository->create($request->all());
+        $user = $this->userRepository->create($request->all());
+
+        $this->personalInformationRepository->create(['user_id' => $user->id]);
 
         return $this->successResponse(message: __('messages.created', [
             'name' => 'user'
@@ -111,7 +113,7 @@ class AuthController extends Controller
      */
     public function resetPassword(Request $request)
     {
-        $this->authService->validateResetPassword($request->only([
+        $this->authService->validatePassword($request->only([
             'password', 'password_confirmation'
         ]));
 

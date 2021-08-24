@@ -45,9 +45,9 @@ class BaseRepository implements BaseRepositoryInterface
         return $this;
     }
 
-    public function update(array $data, $object)
+    public function update(array $data, object $entity)
     {
-        return $object->update($data);
+        return $entity->update($data);
     }
 
     public function with($relations)
