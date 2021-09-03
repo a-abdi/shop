@@ -37,6 +37,7 @@ Route::post('/reset-password', [ UserAuthController::class, 'resetPassword' ])->
 */
 
 Route::middleware(['auth:api'])->group(function () {
+    Route::post('logout', [ UserAuthController::class, 'logout']);
     Route::apiResource('carts', UserCartController::class)->except(['show']);
     Route::post('/personal-information', [ UserPersonalInformationController::class, 'updateOrCreate' ]);
     Route::patch('/user', [ UserController::class, 'update']);
@@ -53,8 +54,9 @@ Route::prefix('admin')->group(function () {
     Route::post('/login', [ AdminAuthController::class, 'login' ])->name('admin.login');
     Route::post('/forgot-password', [ AdminAuthController::class, 'forgotPassword' ])->name('admin.forgotPassword');
     Route::post('/reset-password', [ AdminAuthController::class, 'resetPassword' ])->name('admin.resetPassword');
-
+    
     Route::middleware(['auth:api-admins'])->group(function () {
+        Route::post('logout', [ AdminAuthController::class, 'logout']);
         Route::post('/products/{productId}', [AdminProductController::class, 'update']);
         Route::apiResource('products', AdminProductController::class)->except(['update']);
         Route::apiResources([

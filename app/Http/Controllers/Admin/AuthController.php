@@ -55,6 +55,16 @@ class AuthController extends Controller
         return $this->successResponse($token);
     }
 
+    /**
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return void
+     */
+    public function logout(Request $request)
+    {
+        // $this->authService->logout();
+    }
+
      /**
      * Create token for password reset.
      * Emails the password reset link.
@@ -100,7 +110,7 @@ class AuthController extends Controller
      */
     public function resetPassword(Request $request)
     {
-        $this->authService->validateResetPassword($request->only([
+        $this->authService->validatePassword($request->only([
             'password', 'password_confirmation'
         ]));
 

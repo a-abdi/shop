@@ -8,6 +8,7 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Passport\HasApiTokens;
 use App\Models\Cart;
+use App\Models\OauthAccessToken;
 use App\Models\PersonalInformation;
 
 class User extends Authenticatable
@@ -58,5 +59,9 @@ class User extends Authenticatable
     public function personalInformation()
     {
         return $this->hasOne(PersonalInformation::class);
+    }
+
+    public function AauthAcessToken(){
+        return $this->hasMany(OauthAccessToken::class);
     }
 }

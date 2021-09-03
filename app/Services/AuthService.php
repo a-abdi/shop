@@ -7,6 +7,7 @@ use App\Services\MainService;
 use Illuminate\Support\Facades\Hash;
 use App\Exceptions\UnauthorizedException;
 use App\Exceptions\InvalidArgumentException;
+use Illuminate\Support\Facades\Auth;
 
 class AuthService extends MainService
 {
@@ -101,19 +102,19 @@ class AuthService extends MainService
     /**
      * Validate new password data.
      * 
-     * @param array
-     * @return App\Exceptions\InvalidArgumentException|true
+     * @param \Illuminate\Http\Request $request
+     * @return array | App\Exceptions\InvalidArgumentException
      */
     public function validateUserUpdate($request)
     {
         if ($request->name) {
             $this->validate($request->only('name'), ["name" => self::USER_RULE['name']]);
-            return true;
+            return $request->only('name');
         }
 
         if ($request->email) {
             $this->validate($request->only('email'), ["email" => self::USER_RULE['email']]);
-            return true;
+            return $request->only('email');
         }
 
         if ($request->new_password) {
@@ -121,10 +122,17 @@ class AuthService extends MainService
                 $request->only(['new_password', 'new_password_confirmation']), 
                 ["new_password" => self::USER_RULE['password']]
             );
-            $request['password'] =$this->makeHash($request->new_password);
-            return true;
+            $request['password'] = $this->makeHash($request->new_password);
+            return $request->only('password');
         }
         
         throw new InvalidArgumentException();
-    } 
+    }
+
+    public function logout()
+    {
+        if (Auth::check()) {
+            Auth::user()->AauthAcessToken()->delete();
+        }
+    }
 }

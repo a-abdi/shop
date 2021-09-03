@@ -25,11 +25,13 @@ class UserController extends Controller
         $this->authService->checkUserAuthorized($user, $request->password);
 
         // Validate user data.
-         $this->authService->validateUserUpdate($request);
-        
-        $this->userRepository->update($request->only(['name', 'email', 'password']), $user);
+        $dataUpdate = $this->authService->validateUserUpdate($request);
 
-        return $this->successResponse(message: __('messages.updated', [
+        $this->userRepository->update($dataUpdate, $user);
+
+        $user = Auth::user();
+
+        return $this->successResponse($user, __('messages.updated', [
             'name' => 'user'
         ]));
     }
