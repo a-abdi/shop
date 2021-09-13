@@ -72,7 +72,7 @@ class AuthService extends MainService
      */
     public function adminPasswordResetLink($token)
     {
-        return $passwordResetUrl = "http://192.168.1.138:3000/admin/reset-password/". $token;
+        return $passwordResetUrl = "http://a-abdi.ir/admin/reset-password/". $token;
     }
 
      /**
@@ -83,7 +83,7 @@ class AuthService extends MainService
      */
     public function userPasswordResetLink($token)
     {
-        return $passwordResetUrl = "http://192.168.1.138:3000/reset-password/". $token;
+        return $passwordResetUrl = "http://a-abdi.ir/reset-password/". $token;
     }
 
     /**
