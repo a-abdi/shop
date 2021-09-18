@@ -7,6 +7,7 @@ use App\Models\User;
 use App\Models\Product;
 use Illuminate\Database\Eloquent\Builder;
 use App\Contracts\Repositories\CartRepositoryInterface;
+use Faker\Core\Number;
 
 class CartRepository extends BaseRepository implements CartRepositoryInterface
 {
@@ -17,13 +18,13 @@ class CartRepository extends BaseRepository implements CartRepositoryInterface
 
     /**
      * Get carts.
-     *
+     * @param int $userId
      * @return Illuminate\Database\Eloquent\Collection
      */
-    public function getProductsCart($userId)
+    public function getProductsCart(int $userId)
     {
         $productsId = $this->user->find($userId)->carts()->where('status', 'cart')->pluck('product_id');
 
-        return $this->product->whereIn('id', $productsId)->get();;
+        return $this->product->whereIn('id', $productsId)->get();
     }
 }

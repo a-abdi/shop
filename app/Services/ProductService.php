@@ -21,7 +21,7 @@ class ProductService extends MainService
             'price'       => 'required|numeric|min:1|max:9999999999',
             'discount'    => 'nullable|numeric|min:0|max:9999999999',
             'quantity'    => 'required|numeric|min:1|max:9999999999',
-            'image'       => 'required|file|image|max:1000',
+            'image'       => 'required|file|image|max:3072',
             'description' => 'required|string|min:10',
         ];
 
@@ -44,7 +44,7 @@ class ProductService extends MainService
             'discount'    => 'nullable|numeric|min:0|max:9999999999',
             'quantity'    => 'nullable|numeric|min:1|max:9999999999',
             'description' => 'nullable|string|min:10',
-            'image'       => 'nullable|file|image|max:1000',
+            'image'       => 'nullable|file|image|max:3072',
         ];
 
         $this->validate($data, $rule);

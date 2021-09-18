@@ -6,5 +6,5 @@ use App\Contracts\Repositories\BaseRepositoryInterface;
 
 interface CartRepositoryInterface extends BaseRepositoryInterface
 {
-    public function getProductsCart($userId);
+    public function getProductsCart(int $userId);
 }
