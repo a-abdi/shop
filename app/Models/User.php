@@ -7,9 +7,11 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Passport\HasApiTokens;
-use App\Models\Cart;
+use App\Models\Product;
+use App\Models\Payment as UserPayment;
 use App\Models\OauthAccessToken;
 use App\Models\PersonalInformation;
+use Faker\Provider\ar_SA\Payment;
 
 class User extends Authenticatable
 {
@@ -46,11 +48,11 @@ class User extends Authenticatable
     ];
 
     /**
-     * Get the carts for the user.
+     * Get the products for the user.
      */
-    public function carts()
+    public function product()
     {
-        return $this->hasMany(Cart::class);
+        return $this->hasMany(Product::class, 'orders');
     }
 
     /**
@@ -60,6 +62,15 @@ class User extends Authenticatable
     {
         return $this->hasOne(PersonalInformation::class);
     }
+
+    /**
+     * Get the payment for the user.
+     */
+    public function payment()
+    {
+        return $this->hasMany(UserPayment::class);
+    }
+
 
     public function AauthAcessToken(){
         return $this->hasMany(OauthAccessToken::class);

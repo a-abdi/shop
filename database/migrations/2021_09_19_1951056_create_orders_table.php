@@ -17,7 +17,7 @@ class CreateOrdersTable extends Migration
             $table->foreignId('user_id')->constrained();
             $table->foreignId('product_id')->constrained();
             $table->foreignId('payment_id')->nullable()->constrained();
-            $table->foreignId('status_id')->constrained();
+            $table->unsignedTinyInteger('status_code');
             $table->unsignedInteger('quantity')->default(1);
             $table->timestamps();
         });

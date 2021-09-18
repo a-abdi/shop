@@ -17,7 +17,7 @@ class CreatePaymentsTable extends Migration
             $table->id();
             $table->unsignedInteger('amount');
             $table->string('transaction_id');
-            $table->foreignId('status_id')->constrained();
+            $table->unsignedTinyInteger('error_code')->nullable();
             $table->timestamps();
         });
     }
