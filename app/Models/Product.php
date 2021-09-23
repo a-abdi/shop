@@ -4,7 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use App\Models\User;
+use App\Models\Cart;
 use App\Models\Category;
 use App\Models\Admin;
 
@@ -45,11 +45,11 @@ class Product extends Model
     }
 
     /**
-     * Get the users for the product.
+     * Get the carts for the product.
      */
-    public function users()
+    public function carts()
     {
-        return $this->hasMany(User::class, 'orders');
+        return $this->hasMany(Cart::class);
     }
 
      /**

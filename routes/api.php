@@ -7,6 +7,8 @@ use App\Http\Controllers\ProductController;
 use App\Http\Controllers\CategoryController;
 
 use App\Http\Controllers\User\UserController;
+use App\Http\Controllers\User\OrderController;
+use App\Http\Controllers\User\PaymentController;
 use App\Http\Controllers\User\AuthController as UserAuthController;
 use App\Http\Controllers\User\CartController as UserCartController;
 use App\Http\Controllers\User\PersonalInformationController as UserPersonalInformationController;
@@ -29,6 +31,7 @@ Route::post('/register', [ UserAuthController::class, 'register' ])->name('user.
 Route::post('/login', [ UserAuthController::class, 'login' ])->name('user.login');
 Route::post('/forgot-password', [ UserAuthController::class, 'forgotPassword' ])->name('user.forgotPassword');
 Route::post('/reset-password', [ UserAuthController::class, 'resetPassword' ])->name('user.resetPassword');
+Route::post('/payment/verify', [ PaymentController::class, 'verify']);
 
 /*
 |--------------------------------------------------------------------------
@@ -37,6 +40,7 @@ Route::post('/reset-password', [ UserAuthController::class, 'resetPassword' ])->
 */
 
 Route::middleware(['auth:api'])->group(function () {
+    Route::post('/payment', [ PaymentController::class, 'create']);
     Route::post('logout', [ UserAuthController::class, 'logout']);
     Route::apiResource('carts', UserCartController::class)->except(['show']);
     Route::post('/personal-information', [ UserPersonalInformationController::class, 'updateOrCreate' ]);

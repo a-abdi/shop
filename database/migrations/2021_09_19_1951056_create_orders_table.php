@@ -14,11 +14,9 @@ class CreateOrdersTable extends Migration
     public function up()
     {
         Schema::create('orders', function (Blueprint $table) {
-            $table->foreignId('user_id')->constrained();
-            $table->foreignId('product_id')->constrained();
-            $table->foreignId('payment_id')->nullable()->constrained();
-            $table->unsignedTinyInteger('status_code');
-            $table->unsignedInteger('quantity')->default(1);
+            $table->id();
+            $table->foreignId('payment_id')->constrained();
+            $table->unsignedTinyInteger('status_code')->default(1);
             $table->timestamps();
         });
     }

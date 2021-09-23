@@ -18,7 +18,7 @@ return [
 
 
     // error message
-    'exist'        => ":Name already exists!",
+    'exist'        => "The :name has already been taken.",
     'unauthorized' => 'Incorrect user or password',
     'not_found'    => ':Name not found',
 

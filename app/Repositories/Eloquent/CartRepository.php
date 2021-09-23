@@ -5,9 +5,7 @@ namespace App\Repositories\Eloquent;
 use App\Models\Cart;
 use App\Models\User;
 use App\Models\Product;
-use Illuminate\Database\Eloquent\Builder;
 use App\Contracts\Repositories\CartRepositoryInterface;
-use Faker\Core\Number;
 
 class CartRepository extends BaseRepository implements CartRepositoryInterface
 {
@@ -21,10 +19,30 @@ class CartRepository extends BaseRepository implements CartRepositoryInterface
      * @param int $userId
      * @return Illuminate\Database\Eloquent\Collection
      */
-    public function getProductsCart(int $userId)
+    public function getCart(int $userId)
     {
-        $productsId = $this->user->find($userId)->carts()->where('status', 'cart')->pluck('product_id');
+        return $this->user->find($userId)->carts()->whereNull('order_id')->get();
+    }
 
-        return $this->product->whereIn('id', $productsId)->get();
+    /**
+     * Get total price cart.
+     * 
+     * @param int $userId
+     * @return int 
+     */
+    public function totalPrice(int $userId)
+    {
+        return $this->user->find($userId)->carts()->whereNull('order_id')->sum('price');
+    }
+
+    /**
+     * Get total discount cart.
+     * 
+     * @param int $userId
+     * @return int 
+     */
+    public function totalDiscount(int $userId)
+    {
+        return $this->user->find($userId)->carts()->whereNull('order_id')->sum('discount');
     }
 }

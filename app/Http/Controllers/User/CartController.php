@@ -4,6 +4,7 @@ namespace App\Http\Controllers\User;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use App\Exceptions\InvalidArgumentException;
 use App\Contracts\Repositories\ProductRepositoryInterface;
 use App\Contracts\Repositories\CartRepositoryInterface;
 use App\Contracts\Repositories\UserRepositoryInterface;
@@ -30,9 +31,9 @@ class CartController extends Controller
     {
         $userId = Auth::id();
 
-        $productsCart = $this->cartRepository->getProductsCart($userId);
-        
-        return $this->successResponse($productsCart);
+        $cart = $this->cartRepository->getCart($userId);
+
+        return $this->successResponse($cart);
     }
 
     /**
@@ -49,15 +50,25 @@ class CartController extends Controller
         $this->productService->checkExist($product, __('messages.not_found', [
             'name' => 'product'
         ]));
-        
-        $cartData = $this->cartService->cartData($request->productId);
+
+        $user = Auth::user();
+
+        $productExist = $user->carts()->where('product_id', $request->productId)->exists();
+
+        if ($productExist) {
+            throw new InvalidArgumentException(__('messages.exist', [
+                "name" => "product"
+            ]));
+        }
+
+        $cartData = $this->cartService->createCartData($product);
 
         $this->cartRepository->create($cartData);
 
-        $newCart = $this->cartRepository->getProductsCart($cartData['user_id']);
-        
-        return $this->successResponse($newCart, __('messages.added', [
-            'name' => 'cart'
+        $userCart = $this->cartRepository->getCart($cartData['user_id']);
+
+        return $this->successResponse($userCart, __('messages.added', [
+                'name' => 'cart'
         ]), 201);
     }
 
@@ -70,7 +81,19 @@ class CartController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $this->cartService->cartOwnerUser($id);
+
+        $cart = $this->cartRepository->find($id);
+
+        $cartData = $request->only([ 'price', 'discount', 'quantity', 'order_id' ]);
+
+        $this->cartRepository->update($cartData, $cart);
+
+        $userCart = $this->cartRepository->getCart($cartData['user_id']);
+
+        return $this->successResponse($userCart, __('messages.updated', [
+            'name' => 'cart'
+        ]));
     }
 
     /**
@@ -81,18 +104,13 @@ class CartController extends Controller
      */
     public function destroy($id)
     {
-        $cart = $this->cartRepository->find($id);
+        $this->cartService->cartOwnerUser($id);
+        
+        $this->cartRepository->destroy($id);
+        
+        $user = Auth::user();
 
-        // Check exist cart.
-        $this->cartService->checkExist($cart, __('messages.not_found', [
-            'name' => 'cart'
-        ]));
-
-        $this->cartRepository->destroy($cart->id);
-
-        $userId = Auth::id();
-
-        $carts = $this->cartRepository->getProductsCart($userId);
+        $carts = $this->cartRepository->getCart($user->id);
 
         return $this->successResponse($carts,  __('messages.deleted', [
             'name' => 'cart'
