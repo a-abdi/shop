@@ -22,7 +22,7 @@ interface BaseRepositoryInterface
 
     public function select(array $type);
 
-    public function search(array $data, $value, $type);
+    public function search(array $data, $type, $value);
 
     public function where($type, $value);
 

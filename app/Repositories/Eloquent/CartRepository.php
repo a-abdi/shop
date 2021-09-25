@@ -6,6 +6,7 @@ use App\Models\Cart;
 use App\Models\User;
 use App\Models\Product;
 use App\Contracts\Repositories\CartRepositoryInterface;
+use Illuminate\Support\Facades\DB;
 
 class CartRepository extends BaseRepository implements CartRepositoryInterface
 {
@@ -21,7 +22,28 @@ class CartRepository extends BaseRepository implements CartRepositoryInterface
      */
     public function getCart(int $userId)
     {
-        return $this->user->find($userId)->carts()->whereNull('order_id')->get();
+        return $this->user->find($userId)->carts()->whereNull('order_id')->with('product:id,image_src')->get();
+    }
+
+    /**
+     * check update price and discount.
+     * 
+     * @param int $userId
+     * @return null|Illuminate\Database\Eloquent\Collection
+     */
+    public function checkUpdateCart(int $userId)
+    {
+        return $this->cart->whereExists(function ($query) use ($userId) {
+            $query->select(DB::raw(1))
+                  ->from('products')
+                  ->where('carts.user_id', $userId)
+                  ->whereNull('carts.order_id')
+                  ->whereColumn('products.id', 'carts.product_id')
+                  ->where(function ($query) {
+                      $query->whereColumn('products.price', '<>' ,'carts.price')
+                      ->orWhereColumn('products.discount', '<>' ,'carts.discount');
+                  });
+        })->get();
     }
 
     /**
@@ -44,5 +66,16 @@ class CartRepository extends BaseRepository implements CartRepositoryInterface
     public function totalDiscount(int $userId)
     {
         return $this->user->find($userId)->carts()->whereNull('order_id')->sum('discount');
+    }
+
+     /**
+     * Update order_id in cart.
+     * 
+     * @param int $userId
+     * @return int 
+     */
+    public function registerOrder(int $userId, int $orderId)
+    {
+        return $this->user->find($userId)->carts()->whereNull('order_id')->update(['order_id'=> $orderId]);
     }
 }

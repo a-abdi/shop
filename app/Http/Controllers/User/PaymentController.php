@@ -12,6 +12,7 @@ use App\Services\HttpService;
 use App\Exceptions\NotFoundException;
 use App\Exceptions\InvalidArgumentException;
 use App\Exceptions\ServerErrorException;
+use App\Services\CartService;
 use Illuminate\Support\Facades\Auth;
 
 class PaymentController extends Controller
@@ -21,23 +22,25 @@ class PaymentController extends Controller
         private CartRepositoryInterface $cartRepository,
         private OrderRepositoryInterface $orderRepository,
         private Httpservice $httpService,
+        private CartService $cartService,
     )
     {}
 
-
     public function create()
     {
-        $userID = Auth::id();
+        $userId = Auth::id();
 
-        $cart = $this->cartRepository->getCart($userID);
+        $cart = $this->cartRepository->getCart($userId);
 
         if (!$cart->count()) {
             throw new NotFoundException(__('messages.not_found', ["name" => "cart"]));
         }
 
-        $totalPrice = $this->cartRepository->totalPrice($userID);
+        $this->cartService->updateCart($userId);
 
-        $totalDiscount = $this->cartRepository->totalDiscount($userID);
+        $totalPrice = $this->cartRepository->totalPrice($userId);
+
+        $totalDiscount = $this->cartRepository->totalDiscount($userId);
 
         $amount = $totalPrice - $totalDiscount;
 
@@ -67,7 +70,7 @@ class PaymentController extends Controller
         }
 
         $this->paymentRepository->create([
-            'user_id' => $userID,
+            'user_id' => $userId,
             'amount' => $amount,
             'order_id' => $orderID,
             'transaction_id' => $response->object()->id,
@@ -139,7 +142,9 @@ class PaymentController extends Controller
             'status_code' => $response->object()->status,
         ], $payment);
 
-        $this->orderRepository->create([ 'payment_id' => $payment->id, 'status_code' => 1 ]);
+        $order = $this->orderRepository->create([ 'payment_id' => $payment->id, 'status_code' => 1 ]);
+
+        $this->cartRepository->registerOrder($payment->user_id, $order->id);
 
         #redirect to success page with necessary data
     }

@@ -55,7 +55,7 @@ class BaseRepository implements BaseRepositoryInterface
         return $this->model->with($relations)->get();
     }
 
-    public function select($columns)
+    public function select(array $columns)
     {
         return $this->model->select($columns)->get();
     }

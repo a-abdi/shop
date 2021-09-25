@@ -30,8 +30,12 @@ class CartController extends Controller
     public function index()
     {
         $userId = Auth::id();
+       
+        $updateCart = $this->cartService->updateCart($userId);
 
         $cart = $this->cartRepository->getCart($userId);
+
+        $cart['update'] = $updateCart;
 
         return $this->successResponse($cart);
     }
@@ -85,13 +89,13 @@ class CartController extends Controller
 
         $cart = $this->cartRepository->find($id);
 
-        $cartData = $request->only([ 'price', 'discount', 'quantity', 'order_id' ]);
+        $cartQuantity = $request->only('quantity');
 
-        $this->cartRepository->update($cartData, $cart);
+        $this->cartRepository->update($cartQuantity, $cart);
 
-        $userCart = $this->cartRepository->getCart($cartData['user_id']);
+        $cart = $this->cartRepository->getCart(Auth::id());
 
-        return $this->successResponse($userCart, __('messages.updated', [
+        return $this->successResponse($cart, __('messages.updated', [
             'name' => 'cart'
         ]));
     }
