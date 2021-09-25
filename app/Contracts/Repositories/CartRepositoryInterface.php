@@ -15,4 +15,6 @@ interface CartRepositoryInterface extends BaseRepositoryInterface
     public function totalDiscount(int $userId);
 
     public function registerOrder(int $userId, int $orderId);
+
+    public function checkExistCart(int $userId, int $productId);
 }

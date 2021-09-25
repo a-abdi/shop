@@ -31,11 +31,9 @@ class CartController extends Controller
     {
         $userId = Auth::id();
        
-        $updateCart = $this->cartService->updateCart($userId);
+        $this->cartService->updateCart($userId);
 
         $cart = $this->cartRepository->getCart($userId);
-
-        $cart['update'] = $updateCart;
 
         return $this->successResponse($cart);
     }
@@ -55,9 +53,7 @@ class CartController extends Controller
             'name' => 'product'
         ]));
 
-        $user = Auth::user();
-
-        $productExist = $user->carts()->where('product_id', $request->productId)->exists();
+        $productExist = $this->cartRepository->checkExistCart(Auth::id(), $request->productId);
 
         if ($productExist) {
             throw new InvalidArgumentException(__('messages.exist', [

@@ -72,10 +72,23 @@ class CartRepository extends BaseRepository implements CartRepositoryInterface
      * Update order_id in cart.
      * 
      * @param int $userId
+     * @param int $orderId
      * @return int 
      */
     public function registerOrder(int $userId, int $orderId)
     {
         return $this->user->find($userId)->carts()->whereNull('order_id')->update(['order_id'=> $orderId]);
+    }
+
+     /**
+     * Checks the product in the cart.
+     * 
+     * @param int $userId
+     * @param int $productId
+     * @return bool 
+     */
+    public function checkExistCart(int $userId, int $productId)
+    {
+        return $this->user->find($userId)->carts()->whereNull('order_id')->where('product_id', $productId)->exists();
     }
 }
