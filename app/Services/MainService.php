@@ -40,6 +40,22 @@ class MainService
     }
 
     /**
+     *  if be exist return error.
+     *
+     * @param bool|null
+     * @param string|null
+     * @return App\Exceptions\NotFoundException|true
+     */
+    public function checkNotExist(bool $value = null,string $message = 'not found')
+    {
+        if($value) {
+            throw new NotFoundException($message); 
+        }
+
+        return  true;
+    }
+
+    /**
      * Validate data.
      *
      * @param array $data

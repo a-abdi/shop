@@ -83,10 +83,14 @@ class CartController extends Controller
     {
         $this->cartService->cartOwnerUser($id);
 
-        $cart = $this->cartRepository->find($id);
-
         $cartQuantity = $request->only('quantity');
+        
+        $this->cartService->validateUpdate($cartQuantity);
 
+        $cart = $this->cartRepository->find($id);
+        
+        $this->cartService->checkNotExist($cart->order_id);
+        
         $this->cartRepository->update($cartQuantity, $cart);
 
         $cart = $this->cartRepository->getCart(Auth::id());

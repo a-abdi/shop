@@ -22,7 +22,7 @@ class CartRepository extends BaseRepository implements CartRepositoryInterface
      */
     public function getCart(int $userId)
     {
-        return $this->user->find($userId)->carts()->whereNull('order_id')->with('product:id,image_src')->get();
+        return $this->user->find($userId)->carts()->whereNull('order_id')->with('product:id,image_src,name')->get();
     }
 
     /**

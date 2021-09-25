@@ -16,6 +16,23 @@ class CartService extends MainService
     ){}
 
     /**
+     * Validate update cart.
+     *
+     * @param array
+     * @return App\Exceptions\InvalidArgumentException|true
+     */
+    public function validateUpdate(array $data)
+    {
+        $rule = [
+            'quantity' => 'required|numeric|min:1|max:5',
+        ];
+
+        $this->validate($data, $rule);
+
+        return true;
+    }
+
+    /**
      * Preparation cart data.
      *
      * @param string
