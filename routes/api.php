@@ -40,6 +40,7 @@ Route::post('/payment/verify', [ PaymentController::class, 'verify']);
 */
 
 Route::middleware(['auth:api'])->group(function () {
+    Route::get('/payment/message-latest', [ PaymentController::class, 'latestMessage']);
     Route::post('/payment', [ PaymentController::class, 'create']);
     Route::post('logout', [ UserAuthController::class, 'logout']);
     Route::apiResource('carts', UserCartController::class)->except(['show']);

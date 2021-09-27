@@ -8,6 +8,8 @@ use Illuminate\Support\Facades\Hash;
 use App\Exceptions\UnauthorizedException;
 use App\Exceptions\InvalidArgumentException;
 use Illuminate\Support\Facades\Auth;
+use App\Services\HttpService;
+use Illuminate\Support\Facades\App;
 
 class AuthService extends MainService
 {
@@ -72,7 +74,9 @@ class AuthService extends MainService
      */
     public function adminPasswordResetLink($token)
     {
-        return $passwordResetUrl = "http://a-abdi.ir/admin/reset-password/". $token;
+        $httpService = App::make(HttpService::class);
+        $baseDomain = $httpService->baseDomainFrontend();
+        return $baseDomain.'/admin/reset-password/'. $token;
     }
 
      /**
@@ -83,7 +87,9 @@ class AuthService extends MainService
      */
     public function userPasswordResetLink($token)
     {
-        return $passwordResetUrl = "http://a-abdi.ir/reset-password/". $token;
+        $httpService = App::make(HttpService::class);
+        $baseDomain = $httpService->baseDomainFrontend();
+        return $baseDomain.'/reset-password/'. $token;
     }
 
     /**

@@ -6,5 +6,7 @@ use App\Contracts\Repositories\BaseRepositoryInterface;
 
 interface PaymentRepositoryInterface extends BaseRepositoryInterface
 {
-    public function verify(array $data);
+    public function getPayment(array $data);
+
+    public function getLastPayment(int $userId);
 }

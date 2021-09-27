@@ -13,11 +13,16 @@ class PaymentRepository extends BaseRepository implements PaymentRepositoryInter
         parent::__construct($payment);
     }
 
-    public function verify(array $data)
+    public function getPayment(array $data)
     {
-        return $verify = Payment::where([
+        return $this->payment->where([
             ['order_id', '=', $data['order_id']],
             ['transaction_id', '=', $data['id']],
-        ])->exists();
+        ])->first();
+    }
+
+    public function getLastPayment(int $userId)
+    {
+        return $this->payment->where('user_id', $userId)->latest()->first();
     }
 }

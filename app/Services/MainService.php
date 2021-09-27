@@ -40,7 +40,7 @@ class MainService
     }
 
     /**
-     *  if be exist return error.
+     *  if be exist return exception Not Found.
      *
      * @param bool|null
      * @param string|null

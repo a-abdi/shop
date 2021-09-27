@@ -8,7 +8,7 @@ use Illuminate\Support\Facades\Http;
 class HttpService extends MainService
 {
     /**
-     * send data to url.
+     * Send data to url.
      *
      * @param array
      * @param string
@@ -20,5 +20,13 @@ class HttpService extends MainService
         return Http::withHeaders($header)->post($url, $data);
     }
 
-  
+    /**
+     * Get base domain fronted to redirect.
+     *
+     * @return string
+     */
+    public function baseDomainFrontend()
+    {
+        return 'http://api.a-abdi.ir:3000';
+    }
 }

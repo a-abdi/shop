@@ -13,12 +13,14 @@ use App\Exceptions\NotFoundException;
 use App\Exceptions\InvalidArgumentException;
 use App\Exceptions\ServerErrorException;
 use App\Services\CartService;
+use App\Services\PaymentService;
 use Illuminate\Support\Facades\Auth;
 
 class PaymentController extends Controller
 {
     public function __construct(
         private PaymentRepositoryInterface $paymentRepository,
+        private PaymentService $paymentService,
         private CartRepositoryInterface $cartRepository,
         private OrderRepositoryInterface $orderRepository,
         private Httpservice $httpService,
@@ -51,11 +53,11 @@ class PaymentController extends Controller
         $orderID = Str::random(50);
 
         $header = [
-            'X-API-KEY' => '0aae5730-0256-4e4e-a0ff-900b9d4aef76',
-            'X-SANDBOX' => true,
+            'X-API-KEY' =>  config('payment.X-API-KEY'),
+            'X-SANDBOX' =>  config('payment.X-SANDBOX'),
         ];
 
-        $url = 'https://api.idpay.ir/v1.1/payment';
+        $url = config('payment.create_url');
 
         $data = [
             "order_id" => $orderID,
@@ -81,34 +83,37 @@ class PaymentController extends Controller
 
     public function verify(Request $request)
     {
-        $payment = $this->paymentRepository->where('order_id', $request->order_id);
+        $payment = $this->paymentRepository->getPayment($request->only(['order_id', 'id']));
+        $baseDomain = $this->httpService->baseDomainFrontend();
         
-        if ($request->status != 10) {
-            // redirect to page error
-            $this->paymentRepository->update($request->only([
-                'track_id',
-                'card_no',
-                'status_code',
-            ]), $payment);
+        if (!$payment) {
+            $data = $this->paymentService->dataUpdate(
+                $request->track_id, 
+                $request->card_no, 
+                20
+            );
+            $this->paymentRepository->update($data, $payment);
+           
+            return redirect($baseDomain.'/order/error');
         }
 
-        $verify = $this->paymentRepository->verify($request->only(['order_id', 'id']));
-
-        if (!$verify) {
-            $this->paymentRepository->update([
-                'track_id' => $request->track_id,
-                'card_no' => $request->card_no,
-                'statsus_code' => 20,
-            ], $payment);
-            # redirect to page error
+        if ($request->status != 10) {
+            $data = $this->paymentService->dataUpdate(
+                $request->track_id, 
+                $request->card_no, 
+                $request->status
+            );
+            $this->paymentRepository->update($data, $payment);
+            
+            return redirect($baseDomain.'/order/error');
         }
 
         $header = [
-            'X-API-KEY' => '0aae5730-0256-4e4e-a0ff-900b9d4aef76',
-            'X-SANDBOX' => true,
+            'X-API-KEY' =>  config('payment.X-API-KEY'),
+            'X-SANDBOX' =>  config('payment.X-SANDBOX'),
         ];
 
-        $url = 'https://api.idpay.ir/v1.1/payment/verify';
+        $url = config('payment.verify_url');
 
         $data = [
             "id"   => $request->id,
@@ -118,34 +123,45 @@ class PaymentController extends Controller
         $response = $this->httpService->post($header, $url, $data);
 
         if ($response->status() != 200) {
-            $this->paymentRepository->update([
-                'track_id' => $response->object()->track_id,
-                'card_no'  => $response->object()->payment->card_no,
-                'status_code' => 21,
-            ], $payment);
-             # redirect to page error server error
+            $data = $this->paymentService->dataUpdate(
+                $response->object()->track_id, 
+                $response->object()->payment->card_no, 
+                21
+            );
+            $this->paymentRepository->update($data, $payment);
+
+            return redirect($baseDomain.'/order/error');
         }
 
         if ($response->object()->status != 100) {
-            $this->paymentRepository->update([
-                'track_id' => $response->object()->track_id,
-                'card_no'  => $response->object()->payment->card_no,
-                'status_code' => $response->object()->status,
-            ], $payment);
-    
-            # redirect to page error with message idpay
+            $data = $this->paymentService->dataUpdate(
+                $response->object()->track_id, 
+                $response->object()->payment->card_no, 
+                $response->object()->status
+            );
+            $this->paymentRepository->update($data, $payment);
+
+            return redirect($baseDomain.'/order/error');
         }
-        
-        $this->paymentRepository->update([
-            'track_id' => $response->object()->track_id,
-            'card_no'  => $response->object()->payment->card_no,
-            'status_code' => $response->object()->status,
-        ], $payment);
+
+        $data = $this->paymentService->dataUpdate(
+            $response->object()->track_id, 
+            $response->object()->payment->card_no, 
+            $response->object()->status
+        );
+        $this->paymentRepository->update($data, $payment);
 
         $order = $this->orderRepository->create([ 'payment_id' => $payment->id, 'status_code' => 1 ]);
 
         $this->cartRepository->registerOrder($payment->user_id, $order->id);
 
-        #redirect to success page with necessary data
+        return redirect($baseDomain.'/order/success');
+    }
+
+    public function latestMessage()
+    {
+        $payment = $this->paymentRepository->getLastPayment(Auth::id());
+
+        return $this->successResponse(message: __('payment.'.$payment->status_code));
     }
 }
